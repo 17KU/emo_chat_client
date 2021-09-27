@@ -9,8 +9,9 @@
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_main.xml" value="0.27717391304347827" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_signup.xml" value="0.13069908814589665" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/fragment_chat.xml" value="0.1537037037037037" />
+        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/fragment_chat_list.xml" value="0.12" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/fragment_friend.xml" value="0.2" />
-        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/friendlist_item.xml" value="0.333786231884058" />
+        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/friendlist_item.xml" value="0.1" />
       </map>
     </option>
   </component>

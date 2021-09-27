@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-data class ShowFriend(
+data class ShowFriendOutput(
     var id: String?,
     var uf_user_id_id: String?,
     var uf_friend_id: String?
@@ -26,12 +26,12 @@ data class ShowFriend(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ShowFriend> {
-        override fun createFromParcel(parcel: Parcel): ShowFriend {
-            return ShowFriend(parcel)
+    companion object CREATOR : Parcelable.Creator<ShowFriendOutput> {
+        override fun createFromParcel(parcel: Parcel): ShowFriendOutput {
+            return ShowFriendOutput(parcel)
         }
 
-        override fun newArray(size: Int): Array<ShowFriend?> {
+        override fun newArray(size: Int): Array<ShowFriendOutput?> {
             return arrayOfNulls(size)
         }
     }

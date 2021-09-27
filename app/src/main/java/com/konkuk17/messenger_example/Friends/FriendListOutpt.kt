@@ -5,13 +5,13 @@ import android.os.Parcelable
 import java.util.ArrayList
 
 
-class FriendList(
+class FriendListOutpt(
     val status: String?,
-    val message: ArrayList<ShowFriend>?
+    val message: ArrayList<ShowFriendOutput>?
         ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.createTypedArrayList(ShowFriend)
+        parcel.createTypedArrayList(ShowFriendOutput)
     ) {
     }
 
@@ -24,12 +24,12 @@ class FriendList(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<FriendList> {
-        override fun createFromParcel(parcel: Parcel): FriendList {
-            return FriendList(parcel)
+    companion object CREATOR : Parcelable.Creator<FriendListOutpt> {
+        override fun createFromParcel(parcel: Parcel): FriendListOutpt {
+            return FriendListOutpt(parcel)
         }
 
-        override fun newArray(size: Int): Array<FriendList?> {
+        override fun newArray(size: Int): Array<FriendListOutpt?> {
             return arrayOfNulls(size)
         }
     }

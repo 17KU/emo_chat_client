@@ -1,4 +1,5 @@
 package com.konkuk17.messenger_example.Friends
+import com.google.gson.JsonArray
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -11,11 +12,11 @@ interface FriendService {
     fun AddFriend(
         @Field("user_id") user_id : String,
         @Field("add_friend_id") add_friend_id : String
-        ) : Call<AddFriend>
+        ) : Call<AddFriendOutput>
 
     @FormUrlEncoded
     @POST("/friends/show_friend/")
     fun ShowFriend(
         @Field("user_id") user_id : String
-        ) : Call<FriendList>
+        ) : Call<List<JsonArray>>
 }
