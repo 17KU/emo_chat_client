@@ -6,30 +6,28 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import com.konkuk17.messenger_example.databinding.FragmentChatBinding
+import org.w3c.dom.Text
 
 class MyChatRecyclerViewAdapter(
-    private val values: List<Chatting>
-) : RecyclerView.Adapter<MyChatRecyclerViewAdapter.ViewHolder>() {
+    private var values: List<Chatting>
+) : RecyclerView.Adapter<MyChatRecyclerViewAdapter.MyViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(FragmentChatBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        var view = FragmentChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.chat_other_id
-        holder.contentView.text = item.chat_title
+        holder.chat_title.text = item.chat_title
     }
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentChatBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+    inner class MyViewHolder(binding: FragmentChatBinding) : RecyclerView.ViewHolder(binding.root) {
+        lateinit var chat_title : TextView
+        init{
+            chat_title = binding.frChatTvChatTitle
         }
     }
 
