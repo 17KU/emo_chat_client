@@ -54,8 +54,8 @@ class LoginActivity : AppCompatActivity() {
                         var dialog = AlertDialog.Builder(this@LoginActivity)
 
                         if(login?.code.equals("0000")){
-                            dialog.setTitle("로그인 성공!")
-                            dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
+                            dialog.setTitle("로그인 성공")
+                            dialog.setMessage("로그인에 성공했습니다.")
                             dialog.setPositiveButton("확인"){ _,_->
                                 var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(mainIntent)
@@ -63,20 +63,23 @@ class LoginActivity : AppCompatActivity() {
                             dialog.show()
                         }
                         else if(login?.code.equals("0001")){
-                            dialog.setTitle("로그인 실패!")
-                            dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
+                            dialog.setTitle("로그인 실패")
+                            dialog.setMessage("존재하지 않는 아이디입니다.")
                             dialog.setPositiveButton("확인"){ _,_->
-                                var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(mainIntent)
                             }
                             dialog.show()
                         }
                         else if(login?.code.equals("0002")){
-                            dialog.setTitle("로그인 실패!")
+                            dialog.setTitle("로그인 실패")
+                            dialog.setMessage("비밀번호가 틀렸습니다.")
+                            dialog.setPositiveButton("확인"){ _,_->
+                            }
+                            dialog.show()
+                        }
+                        else{
+                            dialog.setTitle("로그인 오류")
                             dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
                             dialog.setPositiveButton("확인"){ _,_->
-                                var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(mainIntent)
                             }
                             dialog.show()
                         }
