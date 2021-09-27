@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.konkuk17.messenger_example.Main.IdViewModel
-import com.konkuk17.messenger_example.Main.MainActivity
-import com.konkuk17.messenger_example.R
+
 import com.konkuk17.messenger_example.databinding.FragmentFriendBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -99,7 +98,7 @@ class FriendFragment : Fragment() {
 
                         var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
                         dialog.setTitle("친구추가")
-                        dialog.setMessage("")
+                        dialog.setMessage("id = ")
 
                     }
 
