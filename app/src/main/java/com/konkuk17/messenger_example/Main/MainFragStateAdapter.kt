@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.konkuk17.messenger_example.Chat.ChatFragment
+import com.konkuk17.messenger_example.Friends.FriendFragment
 
 class MainFragStateAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {
@@ -12,7 +13,7 @@ class MainFragStateAdapter(fragmentActivity: FragmentActivity) : FragmentStateAd
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0->ChatFragment()
+            0->FriendFragment()
             1->ChatFragment()
             2->ChatFragment()
             else->ChatFragment()

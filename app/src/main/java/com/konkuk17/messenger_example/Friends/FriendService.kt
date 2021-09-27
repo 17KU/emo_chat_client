@@ -16,7 +16,6 @@ interface FriendService {
     @FormUrlEncoded
     @POST("/friends/show_friend/")
     fun ShowFriend(
-        @Field("user_id") user_id : String,
-        @Field("add_friend_id") add_friend_id : String
-        ) : Call<ShowFriend>
+        @Field("user_id") user_id : String
+        ) : Call<FriendList>
 }
