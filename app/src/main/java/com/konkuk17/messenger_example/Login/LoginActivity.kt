@@ -52,13 +52,35 @@ class LoginActivity : AppCompatActivity() {
                         var login = response.body()
 
                         var dialog = AlertDialog.Builder(this@LoginActivity)
-                        dialog.setTitle("성공!")
-                        dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
-                        dialog.setPositiveButton("확인"){ _,_->
-                            var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
-                            startActivity(mainIntent)
+
+                        if(login?.code.equals("0000")){
+                            dialog.setTitle("로그인 성공!")
+                            dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
+                            dialog.setPositiveButton("확인"){ _,_->
+                                var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(mainIntent)
+                            }
+                            dialog.show()
                         }
-                        dialog.show()
+                        else if(login?.code.equals("0001")){
+                            dialog.setTitle("로그인 실패!")
+                            dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
+                            dialog.setPositiveButton("확인"){ _,_->
+                                var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(mainIntent)
+                            }
+                            dialog.show()
+                        }
+                        else if(login?.code.equals("0002")){
+                            dialog.setTitle("로그인 실패!")
+                            dialog.setMessage("code = " + login?.code + ", msg = " + login?.msg + ", user_id = " + login?.user_id + ", user_name = "+ login?.user_name)
+                            dialog.setPositiveButton("확인"){ _,_->
+                                var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(mainIntent)
+                            }
+                            dialog.show()
+                        }
+
                     }
                     //웹통신에 실패했을때 실행되는 코드
                     override fun onFailure(call: Call<Login>, t: Throwable) {
