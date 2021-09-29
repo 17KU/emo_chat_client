@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
@@ -39,7 +41,7 @@ class FriendFragment : Fragment() {
 
     var friendlist = arrayListOf<FriendRecycleViewData>()
 
-    lateinit var myViewModel: IdViewModel
+    val myIdViewModel: IdViewModel by activityViewModels<IdViewModel>()
 
     lateinit var binding: FragmentFriendBinding
 
@@ -86,21 +88,22 @@ class FriendFragment : Fragment() {
         binding.apply{
             addFriendBtn.setOnClickListener{
 
-                var user_id = "youm"
+                var user_id = myIdViewModel.myId.value.toString()
                 var add_friend_id = addFriendEtxt.text.toString()
 
+                if(user_id.equals("youm")){
+                    Toast.makeText(this@FriendFragment.requireContext(),"동일함 "+user_id,Toast.LENGTH_LONG).show()
+                }
+                else{
+                    Toast.makeText(this@FriendFragment.requireContext(),"동일하지 않음",Toast.LENGTH_LONG).show()
+                }
 
                 friendService.AddFriend(user_id,add_friend_id).enqueue(object :
                     Callback<AddFriendOutput> {
                     override fun onResponse(call: Call<AddFriendOutput>, response: Response<AddFriendOutput>) {
 
                         var add_friend = response.body()
-                        /*
-                        var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
-                        dialog.setTitle("친구추가")
-                        dialog.setMessage("id = "+add_friend?.add_friend_id)
-                        dialog.setPositiveButton("OK"){_,_->}
-                        dialog.show()*/
+
 
                         var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
 
@@ -113,7 +116,7 @@ class FriendFragment : Fragment() {
 
                         else{
                             dialog.setTitle("실패")
-                            dialog.setMessage(add_friend?.code + "   " + add_friend?.msg)
+                            dialog.setMessage(user_id + " "+ add_friend?.code + "   " + add_friend?.msg)
                             dialog.setPositiveButton("OK"){_,_->}
                             dialog.show()
                         }
@@ -135,13 +138,8 @@ class FriendFragment : Fragment() {
             friendRecycleView.setHasFixedSize(true)
 
 
-            friendlist.apply{
-                add(FriendRecycleViewData(name="asdf",photo="1"))
-                friendAdapter.notifyDataSetChanged()
-            }
 
-            var user_id = "youm"
-
+            var user_id = myIdViewModel.myId.value.toString()
 
             friendService.ShowFriend(user_id).enqueue(object :
                 Callback<List<ShowFriendOutput>> {
@@ -157,24 +155,12 @@ class FriendFragment : Fragment() {
                     if(friendData != null){
                         for(friend in friendData){
                             friendlist.apply{
-                                add(FriendRecycleViewData(friend.uf_friend_id.toString(), friend.uf_user_id_id.toString()))
+                                add(FriendRecycleViewData(friend.uf_friend_name.toString(),friend.uf_favorite.toString()))
                                 friendAdapter.notifyDataSetChanged()
                             }
 
                         }
                     }
-                    /*
-                    for(i in 0 until friendData.length()){
-                        val id = friendData.getJSONObject(i).getString("uf_friend_id")
-                        Log.d("friendTest",id)
-                        val img = friendData.getJSONObject(i).getString("uf_user_id_id")
-                        Log.d("friendTest",img)
-                        friendlist.apply{
-                            add(FriendRecycleViewData(name=id,photo=img))
-                            friendAdapter.notifyDataSetChanged()
-                        }
-                    }
-                    */
 
                 }
 

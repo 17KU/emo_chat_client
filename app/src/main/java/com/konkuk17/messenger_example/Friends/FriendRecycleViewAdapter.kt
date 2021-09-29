@@ -20,10 +20,11 @@ class FriendRecycleViewAdapter(
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val friendName = itemView.findViewById<TextView>(R.id.friend_name)
         private val friendImg = itemView.findViewById<ImageView>(R.id.friend_img)
+        private val friendFavorite = itemView.findViewById<TextView>(R.id.favorite_state)
 
         fun bind(friendRecycleViewData: FriendRecycleViewData, context:Context){
             friendName.text = friendRecycleViewData.name
-
+            friendFavorite.text = friendRecycleViewData.favorite
         }
 
 

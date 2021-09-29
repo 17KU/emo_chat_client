@@ -5,6 +5,7 @@ import android.os.Parcelable
 
 
 data class ShowFriendOutput(
-    var uf_user_id_id: String?,
-    var uf_friend_id: String?
+    var uf_friend_name: String?,
+    var uf_friend_id: String?,
+    var uf_favorite: String?
 )

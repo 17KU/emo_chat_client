@@ -3,6 +3,6 @@ package com.konkuk17.messenger_example.Friends
 data class FriendRecycleViewData (
 
     var name: String,
-    var photo: String
+    var favorite: String
 
         )
