@@ -25,5 +25,5 @@ interface FriendService {
     fun AddFavorite(
         @Field("user_id") user_id : String,
         @Field("favorite_add") favorite_add : String
-    )
+    ) : Call<AddFriendOutput>
 }

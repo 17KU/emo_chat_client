@@ -77,44 +77,80 @@ class FriendFragment : Fragment() {
     fun init(){
         Log.d("initTest","init이 됐는지")
 
-
+        //retrofit 연결
         var retrofit = Retrofit.Builder()
             .baseUrl("http://3.36.165.136:80")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+        //friendService API 연결
         var friendService = retrofit.create(FriendService::class.java)
 
         binding.apply{
+
+            var user_id = myIdViewModel.myId.value.toString()
+
+            //recycler view에서 쓸 어뎁터
+            val friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist){ friendRecycleViewData ->
+
+                var favorite_add = friendRecycleViewData.id
+
+                Toast.makeText(this@FriendFragment.requireContext(),favorite_add,Toast.LENGTH_LONG).show()
+
+                friendService.AddFavorite(user_id,favorite_add).enqueue(object :
+                    Callback<AddFriendOutput>{
+                    override fun onResponse(
+                        call: Call<AddFriendOutput>,
+                        response: Response<AddFriendOutput>
+                    ) {
+                        var favorite = response.body()
+
+                        if(favorite?.code.equals("0002")){
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<AddFriendOutput>, t: Throwable) {
+
+                    }
+
+                }
+                )
+            }
+
+            friendRecycleView.adapter = friendAdapter
+
+            val linearLayoutManager = LinearLayoutManager(this@FriendFragment.requireContext())
+            friendRecycleView.layoutManager = linearLayoutManager
+            friendRecycleView.setHasFixedSize(true)
+
+            //친구추가버튼
             addFriendBtn.setOnClickListener{
 
-                var user_id = myIdViewModel.myId.value.toString()
                 var add_friend_id = addFriendEtxt.text.toString()
 
-                if(user_id.equals("youm")){
-                    Toast.makeText(this@FriendFragment.requireContext(),"동일함 "+user_id,Toast.LENGTH_LONG).show()
-                }
-                else{
-                    Toast.makeText(this@FriendFragment.requireContext(),"동일하지 않음",Toast.LENGTH_LONG).show()
-                }
-
+                //API 호출
                 friendService.AddFriend(user_id,add_friend_id).enqueue(object :
                     Callback<AddFriendOutput> {
                     override fun onResponse(call: Call<AddFriendOutput>, response: Response<AddFriendOutput>) {
 
                         var add_friend = response.body()
 
-                        Toast.makeText(this@FriendFragment.requireContext(),user_id + " " + response.body()?.user_id + " " +response.body()?.add_friend_id,Toast.LENGTH_LONG).show()
+                        //Toast.makeText(this@FriendFragment.requireContext(),user_id + " " + response.body()?.user_id + " " +response.body()?.add_friend_id,Toast.LENGTH_LONG).show()
 
                         var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
 
+                        //친구추가 성공 시
                         if(add_friend?.code.equals("0000")){
                             dialog.setTitle("친구추가")
                             dialog.setMessage("id = "+add_friend?.add_friend_id)
                             dialog.setPositiveButton("OK"){_,_->}
                             dialog.show()
-                        }
 
+                            FriendListUpdate(friendService,friendAdapter)
+                        }
+                        //친구추가 실패 시
                         else{
                             dialog.setTitle("실패")
                             dialog.setMessage(user_id + " "+ add_friend?.code + "   " + add_friend?.msg)
@@ -130,49 +166,53 @@ class FriendFragment : Fragment() {
 
             }
 
-            val friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist)
 
-            friendRecycleView.adapter = friendAdapter
-
-            val linearLayoutManager = LinearLayoutManager(this@FriendFragment.requireContext())
-            friendRecycleView.layoutManager = linearLayoutManager
-            friendRecycleView.setHasFixedSize(true)
-
-
-
-            var user_id = myIdViewModel.myId.value.toString()
-
-            friendService.ShowFriend(user_id).enqueue(object :
-                Callback<List<ShowFriendOutput>> {
-                override fun onResponse(
-                    call: Call<List<ShowFriendOutput>>,
-                    response: Response<List<ShowFriendOutput>>
-                ) {
-
-                    friendlist.clear()
-
-                    val friendData : List<ShowFriendOutput>? = response.body()
-
-                    if(friendData != null){
-                        for(friend in friendData){
-                            friendlist.apply{
-                                add(FriendRecycleViewData(friend.uf_friend_name.toString(),friend.uf_favorite.toString()))
-                                friendAdapter.notifyDataSetChanged()
-                            }
-
-                        }
-                    }
-
-                }
-
-
-                override fun onFailure(call: Call<List<ShowFriendOutput>>, t: Throwable) {
-                    Log.d("friendTest","실패했음")
-                }
-
-            })
+            //친구 목록 갱신
+            FriendListUpdate(friendService,friendAdapter)
 
 
         }
     }
+
+
+
+    fun FriendListUpdate(friendService: FriendService, friendAdapter:FriendRecycleViewAdapter){
+        //IdViewModel에서 사용자 id값 가져오기
+        var user_id = myIdViewModel.myId.value.toString()
+
+        //API 호출
+        friendService.ShowFriend(user_id).enqueue(object :
+            Callback<List<ShowFriendOutput>> {
+            override fun onResponse(
+                call: Call<List<ShowFriendOutput>>,
+                response: Response<List<ShowFriendOutput>>
+            ) {
+
+                //리스트 비우기
+                friendlist.clear()
+
+                val friendData : List<ShowFriendOutput>? = response.body()
+
+                //목록 갱신
+                if(friendData != null){
+                    for(friend in friendData){
+                        friendlist.apply{
+                            add(FriendRecycleViewData(friend.uf_friend_name.toString(),friend.uf_friend_id.toString(),friend.uf_favorite_state.toString()))
+                            friendAdapter.notifyDataSetChanged()
+                        }
+
+                    }
+                }
+
+            }
+
+
+            override fun onFailure(call: Call<List<ShowFriendOutput>>, t: Throwable) {
+                Log.d("friendTest","실패했음")
+            }
+
+        })
+    }
+
+
 }
