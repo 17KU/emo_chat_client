@@ -144,13 +144,26 @@ class FriendFragment : Fragment() {
 
 
             friendService.ShowFriend(user_id).enqueue(object :
-                Callback<List<JsonArray>> {
+                Callback<List<ShowFriendOutput>> {
                 override fun onResponse(
-                    call: Call<List<JsonArray>>,
-                    response: Response<List<JsonArray>>
+                    call: Call<List<ShowFriendOutput>>,
+                    response: Response<List<ShowFriendOutput>>
                 ) {
-                    val friendData = JSONTokener(response.message()).nextValue() as JSONArray
 
+                    friendlist.clear()
+
+                    val friendData : List<ShowFriendOutput>? = response.body()
+
+                    if(friendData != null){
+                        for(friend in friendData){
+                            friendlist.apply{
+                                add(FriendRecycleViewData(friend.uf_friend_id.toString(), friend.uf_user_id_id.toString()))
+                                friendAdapter.notifyDataSetChanged()
+                            }
+
+                        }
+                    }
+                    /*
                     for(i in 0 until friendData.length()){
                         val id = friendData.getJSONObject(i).getString("uf_friend_id")
                         Log.d("friendTest",id)
@@ -161,12 +174,12 @@ class FriendFragment : Fragment() {
                             friendAdapter.notifyDataSetChanged()
                         }
                     }
-
+                    */
 
                 }
 
 
-                override fun onFailure(call: Call<List<JsonArray>>, t: Throwable) {
+                override fun onFailure(call: Call<List<ShowFriendOutput>>, t: Throwable) {
                     Log.d("friendTest","실패했음")
                 }
 

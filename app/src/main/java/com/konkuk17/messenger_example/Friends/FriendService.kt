@@ -18,5 +18,5 @@ interface FriendService {
     @POST("/friends/show_friend/")
     fun ShowFriend(
         @Field("user_id") user_id : String
-        ) : Call<List<JsonArray>>
+        ) : Call<List<ShowFriendOutput>>
 }
