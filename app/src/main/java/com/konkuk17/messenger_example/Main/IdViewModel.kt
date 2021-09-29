@@ -10,5 +10,10 @@ class IdViewModel : ViewModel(){
         selectednum.value = num
     }
 
+    val myId = MutableLiveData<String>()
+
+    fun setMyId(id : String){
+        myId.value = id
+    }
 
 }
