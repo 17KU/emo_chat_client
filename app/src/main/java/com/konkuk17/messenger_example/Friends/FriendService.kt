@@ -19,4 +19,11 @@ interface FriendService {
     fun ShowFriend(
         @Field("user_id") user_id : String
         ) : Call<List<ShowFriendOutput>>
+
+    @FormUrlEncoded
+    @POST("/friends/add_favorite")
+    fun AddFavorite(
+        @Field("user_id") user_id : String,
+        @Field("favorite_add") favorite_add : String
+    )
 }

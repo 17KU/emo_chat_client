@@ -104,6 +104,7 @@ class FriendFragment : Fragment() {
 
                         var add_friend = response.body()
 
+                        Toast.makeText(this@FriendFragment.requireContext(),user_id + " " + response.body()?.user_id + " " +response.body()?.add_friend_id,Toast.LENGTH_LONG).show()
 
                         var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
 
