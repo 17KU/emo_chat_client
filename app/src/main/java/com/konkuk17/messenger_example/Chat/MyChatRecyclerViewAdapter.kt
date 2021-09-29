@@ -9,7 +9,7 @@ import com.konkuk17.messenger_example.databinding.FragmentChatBinding
 import org.w3c.dom.Text
 
 class MyChatRecyclerViewAdapter(
-    private var values: List<Chatting>
+    private var values: ArrayList<Chatting>
 ) : RecyclerView.Adapter<MyChatRecyclerViewAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

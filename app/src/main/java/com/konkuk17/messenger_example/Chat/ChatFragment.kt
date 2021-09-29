@@ -12,10 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import com.konkuk17.messenger_example.Friends.FriendRecycleViewAdapter
+import com.konkuk17.messenger_example.Friends.FriendRecycleViewData
 import com.konkuk17.messenger_example.Login.Login
 import com.konkuk17.messenger_example.Main.IdViewModel
 import com.konkuk17.messenger_example.Main.MainActivity
 import com.konkuk17.messenger_example.R
+import com.konkuk17.messenger_example.databinding.FragmentChatBinding
+import com.konkuk17.messenger_example.databinding.FragmentChatListBinding
+import com.konkuk17.messenger_example.databinding.FragmentFriendBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,9 +33,9 @@ class ChatFragment : Fragment() {
 
     val myIdViewModel: IdViewModel by activityViewModels<IdViewModel>()
 
-    private var columnCount = 1
-    lateinit var items: ArrayList<Chatting>
-
+    var items: ArrayList<Chatting> = arrayListOf<Chatting>()
+    lateinit var binding : FragmentChatListBinding
+    lateinit var chatAdapter : MyChatRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,23 +44,25 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        items = arrayListOf()
-        val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
+        ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(IdViewModel::class.java)
+        binding = FragmentChatListBinding.inflate(inflater, container, false)
 
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         //item add
+        chatAdapter = MyChatRecyclerViewAdapter(items)
+
+        binding.fgChatRecyclerview.adapter = chatAdapter
+        val linearLayoutManager = LinearLayoutManager(this@ChatFragment.requireContext())
+        binding.fgChatRecyclerview.layoutManager = linearLayoutManager
+        binding.fgChatRecyclerview.setHasFixedSize(true)
+
         dataInit()
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyChatRecyclerViewAdapter(items)
-            }
-        }
-        return view
     }
 
 
@@ -67,8 +75,9 @@ class ChatFragment : Fragment() {
 
         var chatService = retrofit.create(ChatService::class.java)
 
-        /*var user_id : String = myIdViewModel.myId.value.toString()*/
-        var user_id : String = "youm"
+        var user_id : String = myIdViewModel.myId.value.toString()
+        Log.d("userId", user_id)
+        //var user_id : String = "youm"
 
         chatService.selectChatList(user_id).enqueue(object : Callback<List<Chatting>>{
 
@@ -82,8 +91,10 @@ class ChatFragment : Fragment() {
                 if(chattingList != null) {
                     for (item in chattingList) {
                         items.add(Chatting(item.chat_index, item.chat_title, item.chat_other_id))
+                        Log.d("Chat Item", "chat_index : " + item.chat_index + ", chat_tilte : "+item.chat_title +", other : "+ item.chat_other_id)
                     }
-                    Log.d("Chat Item", "뭐하나 있음")
+
+                    chatAdapter.notifyDataSetChanged()
                 }
                 else{
                     Log.d("Chat Item", "아무것도 없음")

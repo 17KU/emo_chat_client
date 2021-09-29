@@ -58,6 +58,8 @@ class LoginActivity : AppCompatActivity() {
                             dialog.setMessage("로그인에 성공했습니다.")
                             dialog.setPositiveButton("확인"){ _,_->
                                 var mainIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                                mainIntent.putExtra("myId", login?.user_id)
+                                mainIntent.putExtra("myName", login?.user_name)
                                 startActivity(mainIntent)
                             }
                             dialog.show()

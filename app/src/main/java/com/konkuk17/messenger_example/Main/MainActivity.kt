@@ -33,6 +33,12 @@ class MainActivity : AppCompatActivity() {
             tab.text = textarr[position]
             tab.setIcon(iconarr[position])
         }.attach()
+
+        //LoginActivity 에서 받아온 아이디랑 이름을 IdViewModel에 저장하기
+        val myId : String = intent.getStringExtra("myId").toString()
+        val myName : String = intent.getStringExtra("myName").toString()
+        idViewModel.setMyId(myId)
+        idViewModel.setMyNmae(myName)
     }
 
 }

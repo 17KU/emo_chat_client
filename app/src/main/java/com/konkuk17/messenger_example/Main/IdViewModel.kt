@@ -16,4 +16,10 @@ class IdViewModel : ViewModel(){
         myId.value = id
     }
 
+    val myName = MutableLiveData<String>()
+
+    fun setMyNmae(name : String){
+        myName.value = name
+    }
+
 }
