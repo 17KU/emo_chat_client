@@ -6,21 +6,48 @@
     tools:context=".Friends.FriendFragment"
     >
 
-    <Button
-        android:id="@+id/add_friend_btn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/add_friend_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add" />
+
+        <EditText
+            android:id="@+id/add_friend_etxt"
+            android:layout_width="238dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="1dp"
+            android:hint="hint"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_marginTop="80dp"
-        android:text="add" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/add_friend_etxt"
-        android:layout_width="238dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="1dp"
-        android:inputType="textPersonName"
-        android:hint="hint" />
+        <Button
+            android:id="@+id/find_friend_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="search" />
 
+        <EditText
+            android:id="@+id/find_friend_etxt"
+            android:layout_width="238dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="1dp"
+            android:hint="hint"
+            android:inputType="textPersonName" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="409dp"
