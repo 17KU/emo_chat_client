@@ -200,7 +200,8 @@ class FriendFragment : Fragment() {
                             add(FriendRecycleViewData(friend.uf_friend_name.toString(),friend.uf_friend_id.toString(),friend.uf_favorite_state.toString()))
                             friendAdapter.notifyDataSetChanged()
                         }
-
+                        Log.d("friendList LOG", "setFriendList 완료")
+                        myIdViewModel.setFriendList(friendlist)
                     }
                 }
 

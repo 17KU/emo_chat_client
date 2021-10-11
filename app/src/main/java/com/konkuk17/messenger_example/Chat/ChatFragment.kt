@@ -63,6 +63,16 @@ class ChatFragment : Fragment() {
 
         dataInit()
         buttonInit()
+
+        var friendList :ArrayList<FriendRecycleViewData>? = myIdViewModel.getFriendList()
+        Log.d("friendList LOG", "size : "+ friendList?.size)
+
+        if(friendList != null) {
+            for (onefriend in friendList) {
+                Log.d("friendList LOG", onefriend.name +" / "+ onefriend.id + " / "+ onefriend.favorite)
+            }
+        }
+
     }
 
 
