@@ -62,7 +62,7 @@ class ChatFragment : Fragment() {
         binding.fgChatRecyclerview.setHasFixedSize(true)
 
         dataInit()
-
+        buttonInit()
     }
 
 
@@ -114,6 +114,21 @@ class ChatFragment : Fragment() {
 
         })
 
+
+    }
+
+    fun buttonInit(){
+
+        //채팅 리스트 추가
+        binding.chatlistIvAddChat.setOnClickListener {
+
+        }
+
+
+        //채팅 리스트 검색
+        binding.chatlistIvSearchChat.setOnClickListener {
+
+        }
 
     }
 }

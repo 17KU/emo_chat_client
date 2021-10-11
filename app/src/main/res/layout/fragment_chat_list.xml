@@ -6,7 +6,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:name="com.konkuk17.messenger_example.Chat.ChatFragment">
+    android:name="com.konkuk17.messenger_example.Chat.ChatFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:text="채팅"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/chatlist_iv_searchChat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_baseline_search_24"/>
+        <ImageView
+            android:id="@+id/chatlist_iv_addChat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_baseline_add_circle_24"/>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
