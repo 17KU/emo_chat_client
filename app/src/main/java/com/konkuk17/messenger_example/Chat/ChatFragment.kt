@@ -64,6 +64,7 @@ class ChatFragment : Fragment() {
         dataInit()
         buttonInit()
 
+        /*
         var friendList :ArrayList<FriendRecycleViewData>? = myIdViewModel.getFriendList()
         Log.d("friendList LOG", "size : "+ friendList?.size)
 
@@ -72,6 +73,8 @@ class ChatFragment : Fragment() {
                 Log.d("friendList LOG", onefriend.name +" / "+ onefriend.id + " / "+ onefriend.favorite)
             }
         }
+
+         */
 
     }
 
@@ -131,7 +134,11 @@ class ChatFragment : Fragment() {
 
         //채팅 리스트 추가
         binding.chatlistIvAddChat.setOnClickListener {
+            var friendList :ArrayList<FriendRecycleViewData>? = myIdViewModel.getFriendList()
 
+            var intentChatAdd = Intent(this@ChatFragment.requireContext(), ChatAddActivity::class.java)
+            intentChatAdd.putExtra("friendList", friendList)
+            startActivity(intentChatAdd)
         }
 
 
