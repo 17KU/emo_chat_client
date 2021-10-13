@@ -164,6 +164,11 @@ class FriendFragment : Fragment() {
                     }
                 })
 
+
+                findFriendBtn.setOnClickListener{
+                    var find_friend_name = findFriendEtxt.text.toString()
+
+                }
             }
 
 
