@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "751123148306",
+    "project_id": "emo-chat-client",
+    "storage_bucket": "emo-chat-client.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751123148306:android:69fecb2208ac266e3a72cb",
+        "android_client_info": {
+          "package_name": "com.konkuk17.messenger_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751123148306-1ofpgs7rg8vif612nkdrkqdsvd1d98v2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.konkuk17.messenger_example",
+            "certificate_hash": "479892323fd2e54362a1e62b2fbdd3299006ae16"
+          }
+        },
+        {
+          "client_id": "751123148306-ra9fv7cgu8fmgh7dn0gopsjkmv5s87bt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxY4s4R45pFFcGkV3orhrpMbBa0FafYzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751123148306-ra9fv7cgu8fmgh7dn0gopsjkmv5s87bt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

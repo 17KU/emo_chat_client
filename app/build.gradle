@@ -45,6 +45,8 @@ android {
 
 
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 dependencies {
 
@@ -73,6 +75,10 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    //파이어베이스
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
