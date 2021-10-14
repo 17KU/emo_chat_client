@@ -15,7 +15,8 @@
         android:theme="@style/Theme.Messenger_Example"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".Chat.ChatSearchActivity"></activity>
+        <activity android:name=".ChatRoom.MessageActivity"></activity>
+        <activity android:name=".Chat.ChatSearchActivity" />
         <activity android:name=".Chat.ChatAddActivity" />
         <activity android:name=".Login.LoginActivity">
             <intent-filter>

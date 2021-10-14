@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.konkuk17.messenger_example.ChatRoom.MessageActivity
 import com.konkuk17.messenger_example.Friends.FriendRecycleViewAdapter
 import com.konkuk17.messenger_example.Friends.FriendRecycleViewData
 import com.konkuk17.messenger_example.Login.Login
@@ -55,11 +56,22 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //item add
         chatAdapter = MyChatRecyclerViewAdapter(items)
+        chatAdapter.chatListClickListener = object : MyChatRecyclerViewAdapter.ChatListClickListener{
+            override fun onChatListClick(position: Int, item: Chatting) {
+                var myintent = Intent(this@ChatFragment.requireContext(), MessageActivity::class.java)
+                myintent.putExtra("friendUid", item.chat_other_id)
+                myintent.putExtra("myUid", myIdViewModel.myId.value)
+                startActivity(myintent)
+            }
+
+        }
 
         binding.fgChatRecyclerview.adapter = chatAdapter
         val linearLayoutManager = LinearLayoutManager(this@ChatFragment.requireContext())
         binding.fgChatRecyclerview.layoutManager = linearLayoutManager
         binding.fgChatRecyclerview.setHasFixedSize(true)
+
+
 
         dataInit()
         buttonInit()
