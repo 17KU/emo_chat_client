@@ -97,6 +97,7 @@ class FriendFragment : Fragment() {
 
                 Toast.makeText(this@FriendFragment.requireContext(),favorite_add,Toast.LENGTH_LONG).show()
 
+                //친구 즐겨찾기 추가
                 friendService.AddFavorite(user_id,favorite_add).enqueue(object :
                     Callback<AddFriendOutput>{
                     override fun onResponse(
@@ -165,10 +166,6 @@ class FriendFragment : Fragment() {
                 })
 
 
-                findFriendBtn.setOnClickListener{
-                    var find_friend_name = findFriendEtxt.text.toString()
-
-                }
             }
 
 
@@ -176,11 +173,31 @@ class FriendFragment : Fragment() {
             FriendListUpdate(friendService,friendAdapter)
 
 
+
+            //친구 검색
+            findFriendBtn.setOnClickListener{
+
+                var find_friend_name = findFriendEtxt.text.toString()
+
+                var findNameList = friendlist.filter{it.name.equals(find_friend_name)}
+
+                friendlist.clear()
+
+                for(friend in findNameList){
+                    friendlist.apply{
+                        add(FriendRecycleViewData(friend.name,friend.id,friend.favorite))
+                        friendAdapter.notifyDataSetChanged()
+                    }
+
+
+                }
+            }
         }
     }
 
 
 
+    //친구 목록 갱신
     fun FriendListUpdate(friendService: FriendService, friendAdapter:FriendRecycleViewAdapter){
         //IdViewModel에서 사용자 id값 가져오기
         var user_id = myIdViewModel.myId.value.toString()
