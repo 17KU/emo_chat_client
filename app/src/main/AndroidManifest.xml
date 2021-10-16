@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.konkuk17.messenger_example">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:appComponentFactory="whateverString"
@@ -15,7 +13,13 @@
         android:theme="@style/Theme.Messenger_Example"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ChatRoom.MessageActivity"></activity>
+        <activity
+            android:name=".Friends.SearchFriendActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Friends.AddFriendActivity"
+            android:exported="true" />
+        <activity android:name=".ChatRoom.MessageActivity" />
         <activity android:name=".Chat.ChatSearchActivity" />
         <activity android:name=".Chat.ChatAddActivity" />
         <activity android:name=".Login.LoginActivity">
@@ -29,5 +33,7 @@
         <activity android:name=".LoadingActivity" />
         <activity android:name=".Main.MainActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
