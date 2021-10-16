@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_chat_search.xml" value="0.23822463768115942" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_friend.xml" value="0.3442028985507246" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_loading.xml" value="0.3442028985507246" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_login.xml" value="0.1537037037037037" />
@@ -14,6 +13,19 @@
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/fragment_friend.xml" value="0.2" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/friendlist_item.xml" value="0.1" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/friendrecycle_item.xml" value="0.1" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_add_friend.xml" value="0.22" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_chat_add.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_chat_search.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_friend_add.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_loading.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_login.xml" value="0.14673913043478262" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_main.xml" value="0.14673913043478262" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_search_friend.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/activity_signup.xml" value="0.22" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/fragment_chat.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/fragment_chat_list.xml" value="0.16259057971014493" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/fragment_friend.xml" value="0.22" />
+        <entry key="..\:/Users/sohyeon/Desktop/emo_chat_client/app/src/main/res/layout/friendrecycle_item.xml" value="0.16259057971014493" />
       </map>
     </option>
   </component>
