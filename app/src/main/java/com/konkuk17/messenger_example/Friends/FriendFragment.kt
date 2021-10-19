@@ -1,5 +1,6 @@
 package com.konkuk17.messenger_example.Friends
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -79,7 +80,7 @@ class FriendFragment : Fragment() {
 
         //retrofit 연결
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://3.36.165.136:80")
+            .baseUrl("http://203.252.166.72:80")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -129,6 +130,7 @@ class FriendFragment : Fragment() {
             //친구추가버튼
             addFriendBtn.setOnClickListener{
 
+                /*
                 var add_friend_id = addFriendEtxt.text.toString()
 
                 //API 호출
@@ -165,7 +167,11 @@ class FriendFragment : Fragment() {
                     }
                 })
 
+                */
 
+                myIdViewModel.setFriendList(friendlist)
+                val intent = Intent(this@FriendFragment.requireContext(), AddFriendActivity::class.java)
+                startActivity(intent)
             }
 
 
@@ -177,20 +183,8 @@ class FriendFragment : Fragment() {
             //친구 검색
             findFriendBtn.setOnClickListener{
 
-                var find_friend_name = findFriendEtxt.text.toString()
-
-                var findNameList = friendlist.filter{it.name.equals(find_friend_name)}
-
-                friendlist.clear()
-
-                for(friend in findNameList){
-                    friendlist.apply{
-                        add(FriendRecycleViewData(friend.name,friend.id,friend.favorite))
-                        friendAdapter.notifyDataSetChanged()
-                    }
-
-
-                }
+                val intent = Intent(this@FriendFragment.requireContext(), SearchFriendActivity::class.java)
+                startActivity(intent)
             }
         }
     }
