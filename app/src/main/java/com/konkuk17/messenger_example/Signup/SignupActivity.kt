@@ -28,7 +28,7 @@ class SignupActivity : AppCompatActivity() {
     fun init() {
         //retrofit 객체 만들기
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://3.36.165.136:80")
+            .baseUrl("http://203.252.166.72:80")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
