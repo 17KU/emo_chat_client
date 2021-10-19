@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/friend_recycleView"
+            android:id="@+id/search_recycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

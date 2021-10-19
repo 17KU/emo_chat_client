@@ -1,5 +1,6 @@
 package com.konkuk17.messenger_example.Friends
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -46,12 +47,19 @@ class FriendFragment : Fragment() {
 
     lateinit var binding: FragmentFriendBinding
 
+    lateinit var mContext: Context
+
+    lateinit var friendService: FriendService
+
+    lateinit var friendAdapter: FriendRecycleViewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        mContext = this@FriendFragment.requireContext()
     }
 
     override fun onCreateView(
@@ -70,6 +78,7 @@ class FriendFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         init()
 
 
@@ -85,20 +94,21 @@ class FriendFragment : Fragment() {
             .build()
 
         //friendService API 연결
-        var friendService = retrofit.create(FriendService::class.java)
+        friendService = retrofit.create(FriendService::class.java)
 
         binding.apply{
 
             var user_id = myIdViewModel.myId.value.toString()
 
             //recycler view에서 쓸 어뎁터
-            val friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist){ friendRecycleViewData ->
+            friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist){ friendRecycleViewData ->
 
                 var favorite_add = friendRecycleViewData.id
 
                 Toast.makeText(this@FriendFragment.requireContext(),favorite_add,Toast.LENGTH_LONG).show()
 
                 //친구 즐겨찾기 추가
+                //어댑터에 익명 리스너 붙이기 위해 여기에 코드 작성
                 friendService.AddFavorite(user_id,favorite_add).enqueue(object :
                     Callback<AddFriendOutput>{
                     override fun onResponse(
@@ -130,48 +140,11 @@ class FriendFragment : Fragment() {
             //친구추가버튼
             addFriendBtn.setOnClickListener{
 
-                /*
-                var add_friend_id = addFriendEtxt.text.toString()
-
-                //API 호출
-                friendService.AddFriend(user_id,add_friend_id).enqueue(object :
-                    Callback<AddFriendOutput> {
-                    override fun onResponse(call: Call<AddFriendOutput>, response: Response<AddFriendOutput>) {
-
-                        var add_friend = response.body()
-
-                        //Toast.makeText(this@FriendFragment.requireContext(),user_id + " " + response.body()?.user_id + " " +response.body()?.add_friend_id,Toast.LENGTH_LONG).show()
-
-                        var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
-
-                        //친구추가 성공 시
-                        if(add_friend?.code.equals("0000")){
-                            dialog.setTitle("친구추가")
-                            dialog.setMessage("id = "+add_friend?.add_friend_id)
-                            dialog.setPositiveButton("OK"){_,_->}
-                            dialog.show()
-
-                            FriendListUpdate(friendService,friendAdapter)
-                        }
-                        //친구추가 실패 시
-                        else{
-                            dialog.setTitle("실패")
-                            dialog.setMessage(user_id + " "+ add_friend?.code + "   " + add_friend?.msg)
-                            dialog.setPositiveButton("OK"){_,_->}
-                            dialog.show()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<AddFriendOutput>, t: Throwable) {
-
-                    }
-                })
-
-                */
 
                 myIdViewModel.setFriendList(friendlist)
                 val intent = Intent(this@FriendFragment.requireContext(), AddFriendActivity::class.java)
-                startActivity(intent)
+                intent.putExtra("myUid",myIdViewModel.myId.value)
+                startActivityForResult(intent,100)
             }
 
 
@@ -184,9 +157,27 @@ class FriendFragment : Fragment() {
             findFriendBtn.setOnClickListener{
 
                 val intent = Intent(this@FriendFragment.requireContext(), SearchFriendActivity::class.java)
-                startActivity(intent)
+                intent.putExtra("myUid",myIdViewModel.myId.value)
+                intent.putExtra("fList",friendlist)
+                startActivityForResult(intent,101)
             }
         }
+    }
+
+
+    // Activity Result 가 있는 경우 실행되는 콜백함수
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            100->{
+                FriendListUpdate(friendService,friendAdapter)
+            }
+            101->{
+
+            }
+
+        }
+
     }
 
 

@@ -1,11 +1,15 @@
 package com.konkuk17.messenger_example.Friends
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.activityViewModels
 import com.konkuk17.messenger_example.Main.IdViewModel
+import com.konkuk17.messenger_example.Main.MainActivity
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityAddFriendBinding
 import retrofit2.Call
@@ -17,6 +21,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class AddFriendActivity : AppCompatActivity() {
 
     val myIdViewModel: IdViewModel by viewModels<IdViewModel>()
+    var user_id : String = ""
+
+
 
     lateinit var binding : ActivityAddFriendBinding
     var friendList : ArrayList<FriendRecycleViewData>? = null
@@ -34,11 +41,11 @@ class AddFriendActivity : AppCompatActivity() {
     fun init(){
 
         //friendList= intent.getSerializableExtra("friendList") as ArrayList<FriendRecycleViewData>
-        var user_id = myIdViewModel.myId.value.toString()
+        user_id = intent.getStringExtra("myUid").toString()
 
         //retrofit 연결
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://3.36.165.136:80")
+            .baseUrl("http://203.252.166.72:80")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -49,7 +56,7 @@ class AddFriendActivity : AppCompatActivity() {
 
 
             addBtn.setOnClickListener {
-                var add_friend_id = addFriendTxt.text.toString()
+                var add_friend_id = addFriendEtxt.text.toString()
 
                 //API 호출
                 friendService.AddFriend(user_id,add_friend_id).enqueue(object :
@@ -70,6 +77,7 @@ class AddFriendActivity : AppCompatActivity() {
                             dialog.show()
 
                             //FriendListUpdate(friendService,friendAdapter)
+
                         }
                         //친구추가 실패 시
                         else{
