@@ -148,19 +148,20 @@ class FriendFragment : Fragment() {
             }
 
 
-            //친구 목록 갱신
-            FriendListUpdate(friendService,friendAdapter)
-
-
-
             //친구 검색
             findFriendBtn.setOnClickListener{
 
-                val intent = Intent(this@FriendFragment.requireContext(), SearchFriendActivity::class.java)
-                intent.putExtra("myUid",myIdViewModel.myId.value)
-                intent.putExtra("fList",friendlist)
-                startActivityForResult(intent,101)
+                myIdViewModel.setFriendList(friendlist)
+                val intent2 = Intent(this@FriendFragment.requireContext(), SearchFriendActivity::class.java)
+                //intent2.putExtra("myUid",myIdViewModel.myId.value)
+                //intent2.putExtra("fList",myIdViewModel.friendList.value)
+                intent2.putExtra("fList", friendlist)
+                startActivity(intent2)
             }
+
+
+            //친구 목록 갱신
+            FriendListUpdate(friendService,friendAdapter)
         }
     }
 
