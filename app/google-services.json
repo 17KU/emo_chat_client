@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "751123148306",
-    "project_id": "emo-chat-client",
-    "storage_bucket": "emo-chat-client.appspot.com"
+    "project_number": "101516049936",
+    "project_id": "new-emo-chat-client",
+    "storage_bucket": "new-emo-chat-client.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:751123148306:android:69fecb2208ac266e3a72cb",
+        "mobilesdk_app_id": "1:101516049936:android:73b95f58d13cb33cfb9495",
         "android_client_info": {
           "package_name": "com.konkuk17.messenger_example"
         }
       },
       "oauth_client": [
         {
-          "client_id": "751123148306-1ofpgs7rg8vif612nkdrkqdsvd1d98v2.apps.googleusercontent.com",
+          "client_id": "101516049936-m8ov59c9vge5i7l70nsjdeqgmpj9s9pu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.konkuk17.messenger_example",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "751123148306-ra9fv7cgu8fmgh7dn0gopsjkmv5s87bt.apps.googleusercontent.com",
+          "client_id": "101516049936-cv9v12gj5pg1mrv0fe8jv1okru2od1t2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBxY4s4R45pFFcGkV3orhrpMbBa0FafYzs"
+          "current_key": "AIzaSyCaumCkhVNW-UA_PmFrErF4TC0-PazHfYk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "751123148306-ra9fv7cgu8fmgh7dn0gopsjkmv5s87bt.apps.googleusercontent.com",
+              "client_id": "101516049936-cv9v12gj5pg1mrv0fe8jv1okru2od1t2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
