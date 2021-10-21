@@ -114,12 +114,15 @@ class ChatFragment : Fragment() {
                 items.clear()
                 val chattingList : List<Chatting>?  = response.body()
                 if(chattingList != null) {
-                    for (item in chattingList) {
-                        items.add(Chatting(item.chat_index, item.chat_title, item.chat_other_id))
-                        Log.d("Chat Item", "chat_index : " + item.chat_index + ", chat_tilte : "+item.chat_title +", other : "+ item.chat_other_id)
-                    }
+                    if(chattingList[0]?.code != "0001"){
+                        for (item in chattingList) {
+                            items.add(Chatting(item.chat_index, item.chat_title, item.chat_other_id, item.code, item.msg))
+                            Log.d("Chat Item", "chat_index : " + item.chat_index + ", chat_tilte : "+item.chat_title +
+                                    ", other : "+ item.chat_other_id +", code : "+ item.code + ", msg : "+item.msg)
+                        }
 
-                    chatAdapter.notifyDataSetChanged()
+                        chatAdapter.notifyDataSetChanged()
+                    }
                 }
                 else{
                     Log.d("Chat Item", "아무것도 없음")
