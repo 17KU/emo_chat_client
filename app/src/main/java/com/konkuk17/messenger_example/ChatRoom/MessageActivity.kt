@@ -2,7 +2,10 @@ package com.konkuk17.messenger_example.ChatRoom
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.konkuk17.messenger_example.databinding.ActivityMessageBinding
 
 class MessageActivity : AppCompatActivity() {
@@ -33,9 +36,23 @@ class MessageActivity : AppCompatActivity() {
 
                 FirebaseDatabase.getInstance().getReference().child("chatrooms").push().setValue(chatModel)
 
+                val database = Firebase.database
+                //val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference()
+                myRef.setValue("test message")
+
+
+                Toast.makeText(this@MessageActivity,myRef.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MessageActivity,myUid + " " + friendUid, Toast.LENGTH_LONG).show()
+
 
             }
 
         }
+    }
+
+
+    fun checkChatRoom(){
+        //FirebaseDatabase.getInstance().getReference().child("")
     }
 }
