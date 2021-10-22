@@ -47,6 +47,7 @@ class SettingFragment : Fragment() {
                 val intent = Intent(this@SettingFragment.requireContext(),MessageActivity::class.java)
                 intent.putExtra("myUid",myIdViewModel.myId.value.toString())
                 intent.putExtra("friendUid","2")
+                intent.putExtra("roomIndex","10")
 
                 startActivity(intent)
             }
