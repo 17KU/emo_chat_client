@@ -15,11 +15,17 @@ import com.konkuk17.messenger_example.Friends.FriendRecycleViewData
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityChatAddBinding
 import com.konkuk17.messenger_example.databinding.FriendrecycleItemInChattingBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class ChatAddActivity : AppCompatActivity() {
     lateinit var binding: ActivityChatAddBinding
     var selectedFriend: String? = null
     var friendList: ArrayList<FriendRecycleViewData>? = null
+    var userId : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +35,7 @@ class ChatAddActivity : AppCompatActivity() {
     }
 
     fun init() {
+        userId = intent.getStringExtra("myUserId")
         friendList = intent.getSerializableExtra("friendList") as ArrayList<FriendRecycleViewData>
 
         if (friendList != null) {
@@ -41,11 +48,11 @@ class ChatAddActivity : AppCompatActivity() {
                         .setMessage(myfriend.name + "님과 채팅방을 생성하시겠습니까?")
                         .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
                             Log.d("채팅방 생성", "채팅방 생성을 취소했습니다.")
-                            Toast.makeText(this, "채팅방 생성을 취소했습니다.", Toast.LENGTH_SHORT)
                         })
                         .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                             Log.d("채팅방 생성", "채팅방을 생성했습니다.")
-                            Toast.makeText(this, "채팅방을 생성했습니다.", Toast.LENGTH_SHORT)
+                            selectedFriend = myfriend.id
+                            insertChatting(userId!!, selectedFriend!!)
                         })
                     alertDialog.show()
                 }
@@ -57,6 +64,57 @@ class ChatAddActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun insertChatting(myUserId : String, myFriendId : String) {
+        //retrofit 객체 만들기
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://203.252.166.72:80")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var chatService = retrofit.create(ChatService::class.java)
+
+
+        Log.d("userId", myUserId)
+        Log.d("friendId", myFriendId)
+
+        chatService.insertChatList(myUserId, myFriendId).enqueue(object : Callback<List<Chatting>> {
+
+            //웹통신에 성공했을때 실행되는 코드. 응답값을 받아옴.
+            override fun onResponse(
+                call: Call<List<Chatting>>,
+                response: Response<List<Chatting>>
+            ) {
+
+                val chattingList : List<Chatting>?  = response.body()
+                if(chattingList != null) {
+                    if(chattingList[0]?.code == "0004" || chattingList[0]?.code == "0005"){
+                        for (item in chattingList) {
+                            var newChatting = Chatting(item.chat_index, item.chat_title, item.chat_other_id, item.code, item.msg)
+
+                            Log.d("retrofit", "chat_index : " + item.chat_index + ", chat_tilte : "+item.chat_title +
+                                    ", other : "+ item.chat_other_id +", code : "+ item.code + ", msg : "+item.msg)
+
+                        }
+
+                    }
+                }
+                else{
+                    Log.d("retrofit", "아무것도 없음")
+                }
+
+            }
+            //웹통신에 실패했을때 실행되는 코드
+            override fun onFailure(call: Call<List<Chatting>>, t: Throwable) {
+                Log.d("retrofit", "통신 실패")
+                Log.d("retrofit", t.message.toString())
+            }
+
+
+        })
+
+
     }
 
 }

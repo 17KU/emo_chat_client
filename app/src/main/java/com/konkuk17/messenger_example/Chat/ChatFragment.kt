@@ -150,9 +150,11 @@ class ChatFragment : Fragment() {
         //채팅 리스트 추가
         binding.chatlistIvAddChat.setOnClickListener {
             var friendList :ArrayList<FriendRecycleViewData>? = myIdViewModel.getFriendList()
+            var user_id : String = myIdViewModel.myId.value.toString()
 
             var intentChatAdd = Intent(this@ChatFragment.requireContext(), ChatAddActivity::class.java)
             intentChatAdd.putExtra("friendList", friendList)
+            intentChatAdd.putExtra("myUserId", user_id)
             startActivity(intentChatAdd)
         }
 
