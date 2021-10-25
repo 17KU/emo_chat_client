@@ -11,13 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.konkuk17.messenger_example.Chat.MyChatRecyclerViewAdapter
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityMessageBinding
 import java.util.ArrayList
@@ -31,7 +25,8 @@ class MessageActivity : AppCompatActivity() {
     var chatRoomUid : String =""
     var roomindex : String=""
 
-
+    lateinit var messageAdapter : MessageRecyclerViewAdapter
+    lateinit var linearLayoutManager : LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,15 +46,10 @@ class MessageActivity : AppCompatActivity() {
         var msgRecyclerViewBind = binding.messageRecyclerview
 
 
-        checkChatRoom()
+        checkChatRoom(msgRecyclerViewBind)
 
         //이거 checkChatRoom 안으로 옮기기
-        var messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid)
-        msgRecyclerViewBind.adapter = messageAdapter
 
-        var linearLayoutManager = LinearLayoutManager(this@MessageActivity)
-        msgRecyclerViewBind.layoutManager = linearLayoutManager
-        msgRecyclerViewBind.setHasFixedSize(true)
 
         binding.msgactiBtnSubmit.setOnClickListener {
 
@@ -91,10 +81,24 @@ class MessageActivity : AppCompatActivity() {
                     }
                     else{
                         //입력 있을 때
-                    var comment : ChatModel.Comment = ChatModel().Comment(myUid, msgEditTextbind.text.toString())
-                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment)
+                        var comment : ChatModel.Comment = ChatModel().Comment(myUid, msgEditTextbind.text.toString())
+                        FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment)
+
+
                     }
                 }
+
+                /*
+                messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid)
+                msgRecyclerViewBind.adapter = messageAdapter
+
+                linearLayoutManager = LinearLayoutManager(this@MessageActivity)
+                msgRecyclerViewBind.layoutManager = linearLayoutManager
+                msgRecyclerViewBind.setHasFixedSize(true)
+
+                messageAdapter.notifyDataSetChanged()
+
+                 */
             }
 
 
@@ -103,7 +107,7 @@ class MessageActivity : AppCompatActivity() {
 
 
 
-    fun checkChatRoom(){
+    fun checkChatRoom(msgRecyclerViewBind: RecyclerView ){
 
         //user(보내는 쪽) id가 포함된 채팅방 목록 정렬
         FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("roomIndex").equalTo(roomindex).addListenerForSingleValueEvent(object: ValueEventListener{
@@ -129,6 +133,14 @@ class MessageActivity : AppCompatActivity() {
                     chatRoomUid = item.key.toString()
                     Log.d("fire",chatRoomUid)
 
+                    messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid)
+                    msgRecyclerViewBind.adapter = messageAdapter
+
+                    linearLayoutManager = LinearLayoutManager(this@MessageActivity)
+                    msgRecyclerViewBind.layoutManager = linearLayoutManager
+                    msgRecyclerViewBind.setHasFixedSize(true)
+
+                    messageAdapter.notifyDataSetChanged()
 
                 }
             }
@@ -152,20 +164,33 @@ class MessageActivity : AppCompatActivity() {
             //comments = ArrayList<ChatModel.Comment>()
             comments = ArrayList<ChatModel.Comment>()
 
-            FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid).child("comments").addValueEventListener(object:ValueEventListener{
+            FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     comments.clear()
                     Log.d("fire","in adapter : "+chatRoomUid)
 
+
                     for(item in snapshot.children){
                         Log.d("fire",item.getValue().toString())
-                        comments.add(item.getValue() as ChatModel.Comment)
+
+                        var tmp : ChatModel.Comment
+                        tmp = ChatModel().Comment("","")
+
+                        //Log.d("fire", "uid : "+item.child("uid").value.toString())
+                        //Log.d("fire", "message : "+item.child("message").value.toString())
+
+                        tmp.uid = item.child("uid").value.toString()
+                        tmp.message = item.child("message").value.toString()
+
+                        comments.add(tmp)
+
                     }
                     notifyDataSetChanged();
+                    Log.d("fire","in adapter : for is end")
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Log.d("fire","faild adapter")
                 }
             })
 
