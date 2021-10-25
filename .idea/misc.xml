@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17962962962962964" />
+        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/drawable/ic_baseline_people_24.xml" value="0.1925925925925926" />
+        <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1925925925925926" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_add_friend.xml" value="0.2640625" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_chat_add.xml" value="0.1358695652173913" />
         <entry key="..\:/Users/Hong/Documents/emo_chat_client/app/src/main/res/layout/activity_chat_search.xml" value="0.23822463768115942" />

@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/messageItem_mainlayout"
+    >
+
+    <LinearLayout
+
+        android:id="@+id/messageItem_linear"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/messageItem_profile_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
+
+        <TextView
+            android:id="@+id/messageItem_name"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+
+            />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/messageItem_emo_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        />
 
     <TextView
         android:id="@+id/messageItem_textView"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"/>
+        android:layout_height="50dp"/>
+
 
 
 </LinearLayout>

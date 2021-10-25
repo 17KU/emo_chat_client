@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +18,6 @@ import com.google.firebase.database.*
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityMessageBinding
 import java.util.ArrayList
-import kotlin.math.log
 
 class MessageActivity : AppCompatActivity() {
     lateinit var binding : ActivityMessageBinding
@@ -24,7 +26,7 @@ class MessageActivity : AppCompatActivity() {
     var myUid : String? = ""
     var chatRoomUid : String =""
     var roomindex : String=""
-
+    var friendName: String=""
     lateinit var messageAdapter : MessageRecyclerViewAdapter
     lateinit var linearLayoutManager : LinearLayoutManager
 
@@ -40,6 +42,7 @@ class MessageActivity : AppCompatActivity() {
         myUid = intent.getStringExtra("myUid")
         friendUid = intent.getStringExtra("friendUid")
         roomindex = intent.getStringExtra("roomIndex").toString()
+        friendName = intent.getStringExtra("friendName").toString()
 
         //입력창 bind
         var msgEditTextbind = binding.msgactiEtMsg
@@ -82,7 +85,14 @@ class MessageActivity : AppCompatActivity() {
                     else{
                         //입력 있을 때
                         var comment : ChatModel.Comment = ChatModel().Comment(myUid, msgEditTextbind.text.toString())
-                        FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment)
+                        FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener {task->
+                            if(task.isSuccessful){
+                                msgEditTextbind.setText("")
+
+
+                            }
+
+                        }
 
 
                     }
@@ -133,7 +143,7 @@ class MessageActivity : AppCompatActivity() {
                     chatRoomUid = item.key.toString()
                     Log.d("fire",chatRoomUid)
 
-                    messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid)
+                    messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid,myUid,friendUid,friendName, msgRecyclerViewBind)
                     msgRecyclerViewBind.adapter = messageAdapter
 
                     linearLayoutManager = LinearLayoutManager(this@MessageActivity)
@@ -154,7 +164,13 @@ class MessageActivity : AppCompatActivity() {
     class MessageRecyclerViewAdapter(
         private var context: Context,
         //private var comments: List<ChatModel.Comment>,
-        private var chatRoomUid: String
+        private var chatRoomUid: String,
+        private var myUid: String?,
+        private var friendUid: String?,
+        private var friendName: String,
+
+        private var msgRecyclerViewBind: RecyclerView
+
         ): RecyclerView.Adapter<MessageRecyclerViewAdapter.MyViewHolder>(){
 
         //var comments :List<ChatModel.Comment> = ArrayList<ChatModel.Comment>()
@@ -164,6 +180,12 @@ class MessageActivity : AppCompatActivity() {
             //comments = ArrayList<ChatModel.Comment>()
             comments = ArrayList<ChatModel.Comment>()
 
+
+            getMessageList()
+
+        }
+
+        fun getMessageList(){
             FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     comments.clear()
@@ -176,31 +198,58 @@ class MessageActivity : AppCompatActivity() {
                         var tmp : ChatModel.Comment
                         tmp = ChatModel().Comment("","")
 
-                        //Log.d("fire", "uid : "+item.child("uid").value.toString())
-                        //Log.d("fire", "message : "+item.child("message").value.toString())
-
                         tmp.uid = item.child("uid").value.toString()
                         tmp.message = item.child("message").value.toString()
 
                         comments.add(tmp)
 
                     }
+                    //새로고침(메시지 갱신)
                     notifyDataSetChanged();
                     Log.d("fire","in adapter : for is end")
+                    msgRecyclerViewBind.scrollToPosition(comments.size-1)
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("fire","faild adapter")
                 }
             })
-
         }
 
         inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             private val message = itemView.findViewById<TextView>(R.id.messageItem_textView)
+            private val name = itemView.findViewById<TextView>(R.id.messageItem_name)
+            private val p_image = itemView.findViewById<ImageView>(R.id.messageItem_profile_image)
+            private val linear_layout = itemView.findViewById<LinearLayout>(R.id.messageItem_linear)
+
+            private val item_layout = itemView.findViewById<LinearLayout>(R.id.messageItem_mainlayout)
 
             fun bind(data:ChatModel.Comment, context:Context){
-                message.text = data.message
+
+                //내 아이디이면
+                if(data.uid.equals(myUid)){
+                    //item_layout.gravity = Gravity.RIGHT
+                    item_layout.setHorizontalGravity(Gravity.RIGHT)
+
+                    message.text = data.message
+                    message.setBackgroundResource(R.drawable.left_bubble)
+                    linear_layout.visibility = View.INVISIBLE
+
+
+                }
+                //친구 아이디이면
+                else if(data.uid.equals(friendUid)){
+                    p_image.setImageResource(R.drawable.ic_baseline_person_24)
+                    name.text = friendName
+                    message.text = data.message
+                    message.setBackgroundResource(R.drawable.right_bubble)
+                    linear_layout.visibility = View.VISIBLE
+
+                    //item_layout.gravity = Gravity.LEFT
+                    item_layout.setHorizontalGravity(Gravity.LEFT)
+
+                }
             }
 
 
@@ -214,7 +263,7 @@ class MessageActivity : AppCompatActivity() {
 
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.bind(comments[position],context)
+            holder.bind(comments[position],context,)
         }
 
         override fun getItemCount(): Int {

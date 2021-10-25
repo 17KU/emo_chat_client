@@ -45,9 +45,10 @@ class SettingFragment : Fragment() {
         binding.apply{
             chatlistIvAddChat.setOnClickListener{
                 val intent = Intent(this@SettingFragment.requireContext(),MessageActivity::class.java)
-                intent.putExtra("myUid",myIdViewModel.myId.value.toString())
-                intent.putExtra("friendUid","3")
+                intent.putExtra("myUid","3")
+                intent.putExtra("friendUid","1")
                 intent.putExtra("roomIndex","13")
+                intent.putExtra("friendName","333")
 
                 startActivity(intent)
             }
