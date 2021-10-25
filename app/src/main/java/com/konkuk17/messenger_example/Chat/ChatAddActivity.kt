@@ -1,6 +1,7 @@
 package com.konkuk17.messenger_example.Chat
 
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.konkuk17.messenger_example.ChatRoom.MessageActivity
 import com.konkuk17.messenger_example.Friends.FriendRecycleViewAdapter
 import com.konkuk17.messenger_example.Friends.FriendRecycleViewData
 import com.konkuk17.messenger_example.R
@@ -20,12 +22,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatAddActivity : AppCompatActivity() {
     lateinit var binding: ActivityChatAddBinding
     var selectedFriend: String? = null
     var friendList: ArrayList<FriendRecycleViewData>? = null
-    var userId : String? = null
+    var userId: String? = null
+    var friendName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +57,7 @@ class ChatAddActivity : AppCompatActivity() {
                         .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                             Log.d("채팅방 생성", "채팅방을 생성했습니다.")
                             selectedFriend = myfriend.id
+                            friendName = myfriend.name
                             insertChatting(userId!!, selectedFriend!!)
                         })
                     alertDialog.show()
@@ -60,13 +66,14 @@ class ChatAddActivity : AppCompatActivity() {
 
             binding.chataddRecyclerview.apply {
                 adapter = myAdapter
-                layoutManager = LinearLayoutManager(this@ChatAddActivity, LinearLayoutManager.VERTICAL, false)
+                layoutManager =
+                    LinearLayoutManager(this@ChatAddActivity, LinearLayoutManager.VERTICAL, false)
             }
 
         }
     }
 
-    fun insertChatting(myUserId : String, myFriendId : String) {
+    fun insertChatting(myUserId: String, myFriendId: String) {
         //retrofit 객체 만들기
         var retrofit = Retrofit.Builder()
             .baseUrl("http://203.252.166.72:80")
@@ -79,34 +86,50 @@ class ChatAddActivity : AppCompatActivity() {
         Log.d("userId", myUserId)
         Log.d("friendId", myFriendId)
 
-        chatService.insertChatList(myUserId, myFriendId).enqueue(object : Callback<List<Chatting>> {
+        chatService.insertChatList(myUserId, myFriendId).enqueue(object : Callback<Chatting> {
 
-            //웹통신에 성공했을때 실행되는 코드. 응답값을 받아옴.
-            override fun onResponse(
-                call: Call<List<Chatting>>,
-                response: Response<List<Chatting>>
-            ) {
+            override fun onResponse(call: Call<Chatting>, response: Response<Chatting>) {
+                val chatting: Chatting? = response.body()
+                if (chatting != null) {
+                    if (chatting?.code == "0004" || chatting?.code == "0005") {
 
-                val chattingList : List<Chatting>?  = response.body()
-                if(chattingList != null) {
-                    if(chattingList[0]?.code == "0004" || chattingList[0]?.code == "0005"){
-                        for (item in chattingList) {
-                            var newChatting = Chatting(item.chat_index, item.chat_title, item.chat_other_id, item.code, item.msg)
+                        var newChatting = Chatting(
+                            chatting.chat_index,
+                            chatting.chat_title,
+                            chatting.chat_other_id,
+                            chatting.code,
+                            chatting.msg
+                        )
 
-                            Log.d("retrofit", "chat_index : " + item.chat_index + ", chat_tilte : "+item.chat_title +
-                                    ", other : "+ item.chat_other_id +", code : "+ item.code + ", msg : "+item.msg)
+                        Log.d(
+                            "retrofit",
+                            "chat_index : " + chatting.chat_index + ", chat_tilte : " + chatting.chat_title +
+                                    ", other : " + chatting.chat_other_id + ", code : " + chatting.code + ", msg : " + chatting.msg
+                        )
 
-                        }
-
+                        var msgIntent = Intent(this@ChatAddActivity, MessageActivity::class.java)
+                        msgIntent.putExtra("chat_index", newChatting.chat_index)
+                        msgIntent.putExtra("chat_other_id", newChatting.chat_other_id)
+                        msgIntent.putExtra("chat_title", newChatting.chat_title)
+                        msgIntent.putExtra("user_id", userId)
+                        msgIntent.putExtra("friend_name", friendName)
+                        startActivity(msgIntent)
                     }
-                }
-                else{
+                    else if (chatting?.code == "0003" || chatting?.code == "0002") {
+                        Toast.makeText(this@ChatAddActivity, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT)
+                        Log.d("retrofit", "이미 존재하는 채팅방입니다.")
+                    }
+                    else if (chatting?.code == "0001"){
+                        Toast.makeText(this@ChatAddActivity, "친구 관계가 아닙니다.", Toast.LENGTH_SHORT)
+                        Log.d("retrofit", "친구 관계가 아닙니다.")
+                    }
+                } else {
                     Log.d("retrofit", "아무것도 없음")
                 }
 
             }
-            //웹통신에 실패했을때 실행되는 코드
-            override fun onFailure(call: Call<List<Chatting>>, t: Throwable) {
+
+            override fun onFailure(call: Call<Chatting>, t: Throwable) {
                 Log.d("retrofit", "통신 실패")
                 Log.d("retrofit", t.message.toString())
             }
