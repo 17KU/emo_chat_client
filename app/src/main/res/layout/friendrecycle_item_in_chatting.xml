@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:id="@+id/friend_in_chat_layout">
+
+    <ImageView
+        android:id="@+id/friend_img_inChatting"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_person_pin_24" />
+
+
+    <TextView
+        android:id="@+id/friend_name_inChatting"
+
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+
+        android:gravity="center_vertical"
+        android:paddingStart="30dp"
+        android:textColor="#555555"
+        android:textSize="15sp" />
+
+
+</LinearLayout>
+
+
