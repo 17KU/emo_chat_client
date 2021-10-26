@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.konkuk17.messenger_example.ChatRoom.MessageActivity
@@ -30,7 +31,7 @@ class ChatAddActivity : AppCompatActivity() {
     var selectedFriend: String? = null
     var friendList: ArrayList<FriendRecycleViewData>? = null
     var userId: String? = null
-    var friendName : String? = null
+    var friendName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,34 +44,41 @@ class ChatAddActivity : AppCompatActivity() {
         userId = intent.getStringExtra("myUserId")
         friendList = intent.getSerializableExtra("friendList") as ArrayList<FriendRecycleViewData>
 
-        if (friendList != null) {
 
-            var myAdapter = FriendRVAdapter(friendList!!)
-            myAdapter.listener = object : FriendRVAdapter.onFriendSelectedListener {
-                override fun onFriendSelected(myfriend: FriendRecycleViewData) {
-                    var alertDialog = AlertDialog.Builder(this@ChatAddActivity)
-                        .setTitle("채팅방 생성")
-                        .setMessage(myfriend.name + "님과 채팅방을 생성하시겠습니까?")
-                        .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
-                            Log.d("채팅방 생성", "채팅방 생성을 취소했습니다.")
-                        })
-                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                            Log.d("채팅방 생성", "채팅방을 생성했습니다.")
-                            selectedFriend = myfriend.id
-                            friendName = myfriend.name
-                            insertChatting(userId!!, selectedFriend!!)
-                        })
-                    alertDialog.show()
-                }
+
+
+        //리사이클러뷰 init
+        var myAdapter = FriendRVAdapter(friendList!!)
+        myAdapter.listener = object : FriendRVAdapter.onFriendSelectedListener {
+            override fun onFriendSelected(myfriend: FriendRecycleViewData) {
+                var alertDialog = AlertDialog.Builder(this@ChatAddActivity)
+                    .setTitle("채팅방 생성")
+                    .setMessage(myfriend.name + "님과 채팅방을 생성하시겠습니까?")
+                    .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+                        Log.d("채팅방 생성", "채팅방 생성을 취소했습니다.")
+                    })
+                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                        Log.d("채팅방 생성", "채팅방을 생성했습니다.")
+                        selectedFriend = myfriend.id
+                        friendName = myfriend.name
+                        insertChatting(userId!!, selectedFriend!!)
+                    })
+                alertDialog.show()
             }
-
-            binding.chataddRecyclerview.apply {
-                adapter = myAdapter
-                layoutManager =
-                    LinearLayoutManager(this@ChatAddActivity, LinearLayoutManager.VERTICAL, false)
-            }
-
         }
+
+        binding.chataddRecyclerview.apply {
+            adapter = myAdapter
+            layoutManager =
+                LinearLayoutManager(this@ChatAddActivity, LinearLayoutManager.VERTICAL, false)
+        }
+
+        //검색기능 init
+        binding.chataddEtSearchName.addTextChangedListener {
+            var name :String = binding.chataddEtSearchName.text.toString()
+            myAdapter.filter(name)
+        }
+
     }
 
     fun insertChatting(myUserId: String, myFriendId: String) {
@@ -114,12 +122,10 @@ class ChatAddActivity : AppCompatActivity() {
                         msgIntent.putExtra("user_id", userId)
                         msgIntent.putExtra("friend_name", friendName)
                         startActivity(msgIntent)
-                    }
-                    else if (chatting?.code == "0003" || chatting?.code == "0002") {
+                    } else if (chatting?.code == "0003" || chatting?.code == "0002") {
                         Toast.makeText(this@ChatAddActivity, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT)
                         Log.d("retrofit", "이미 존재하는 채팅방입니다.")
-                    }
-                    else if (chatting?.code == "0001"){
+                    } else if (chatting?.code == "0001") {
                         Toast.makeText(this@ChatAddActivity, "친구 관계가 아닙니다.", Toast.LENGTH_SHORT)
                         Log.d("retrofit", "친구 관계가 아닙니다.")
                     }
@@ -145,6 +151,11 @@ class ChatAddActivity : AppCompatActivity() {
 
 class FriendRVAdapter(var friendList: ArrayList<FriendRecycleViewData>) :
     RecyclerView.Adapter<FriendRVAdapter.MyViewHolder>() {
+    var displayFriendList = ArrayList<FriendRecycleViewData>()
+
+    init {
+        displayFriendList.addAll(friendList)
+    }
 
     var listener: onFriendSelectedListener? = null
 
@@ -165,14 +176,30 @@ class FriendRVAdapter(var friendList: ArrayList<FriendRecycleViewData>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemBinding.friendNameInChatting.text = friendList[position].name
+        holder.itemBinding.friendNameInChatting.text = displayFriendList[position].name
         holder.itemBinding.friendInChatLayout.setOnClickListener {
-            listener?.onFriendSelected(friendList[position])
+            listener?.onFriendSelected(displayFriendList[position])
         }
     }
 
     override fun getItemCount(): Int {
-        return friendList.size
+        return displayFriendList.size
+    }
+
+    fun filter(name : String){
+        displayFriendList.clear()
+        if(name.length == 0){
+            displayFriendList.addAll(friendList)
+        }
+        else{
+            for(friend in friendList){
+                if(friend.name.contains(name)){
+                    displayFriendList.add(friend)
+                }
+            }
+        }
+
+        notifyDataSetChanged()
     }
 
 }
