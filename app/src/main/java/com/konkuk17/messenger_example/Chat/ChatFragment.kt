@@ -68,14 +68,16 @@ class ChatFragment : Fragment() {
             }
 
         }
-
+        Log.d("chatFrag", "Adpater 달아주기 직전")
         binding.fgChatRecyclerview.adapter = chatAdapter
+        Log.d("chatFrag", "레이아웃매니저 달아주기 직전")
         val linearLayoutManager = LinearLayoutManager(this@ChatFragment.requireContext())
         binding.fgChatRecyclerview.layoutManager = linearLayoutManager
         binding.fgChatRecyclerview.setHasFixedSize(true)
 
-
+        Log.d("chatFrag", "datainit 직전")
         dataInit()
+        Log.d("chatFrag", "buttoninit 직전")
         buttonInit()
 
         /*

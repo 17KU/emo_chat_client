@@ -1,5 +1,6 @@
 package com.konkuk17.messenger_example.Chat
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,10 +14,12 @@ class MyChatRecyclerViewAdapter(
     private var values: ArrayList<Chatting>
 ) : RecyclerView.Adapter<MyChatRecyclerViewAdapter.MyViewHolder>() {
 
-    var displayChattingList = ArrayList<Chatting>()
+    var allChattingList = ArrayList<Chatting>()
 
     init {
-        displayChattingList.addAll(values)
+        allChattingList.addAll(values)
+        Log.d("chatFrag", "displaychatlist에 옮김")
+        Log.d("chatFrag", "사이즈 : "+ allChattingList.size)
     }
 
 
@@ -32,15 +35,16 @@ class MyChatRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = displayChattingList[position]
+        Log.d("chatFrag", "바인딩")
+        val item = values[position]
         holder.chat_title.text = item.chat_title
 
         holder.binding.frChatLayout.setOnClickListener {
-            chatListClickListener?.onChatListClick(position, displayChattingList[position])
+            chatListClickListener?.onChatListClick(position, values[position])
         }
     }
 
-    override fun getItemCount(): Int = displayChattingList.size
+    override fun getItemCount(): Int = values.size
 
     inner class MyViewHolder(val binding: FragmentChatBinding) : RecyclerView.ViewHolder(binding.root) {
         lateinit var chat_title : TextView
@@ -49,16 +53,16 @@ class MyChatRecyclerViewAdapter(
         }
     }
 
-
+    //ChatSearchActivity에서만 사용함
     fun filter(name : String){
-        displayChattingList.clear()
+        values.clear()
         if(name.length == 0){
-            displayChattingList.addAll(values)
+            values.addAll(allChattingList)
         }
         else{
-            for(chat in values){
+            for(chat in allChattingList){
                 if(chat.chat_other_id!!.contains(name)){
-                    displayChattingList.add(chat)
+                    values.add(chat)
                 }
             }
         }
