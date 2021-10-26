@@ -120,7 +120,6 @@ class ChatAddActivity : AppCompatActivity() {
                         msgIntent.putExtra("chat_other_id", newChatting.chat_other_id)
                         msgIntent.putExtra("chat_title", newChatting.chat_title)
                         msgIntent.putExtra("user_id", userId)
-                        msgIntent.putExtra("friend_name", friendName)
                         startActivity(msgIntent)
                     } else if (chatting?.code == "0003" || chatting?.code == "0002") {
                         Toast.makeText(this@ChatAddActivity, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT)
