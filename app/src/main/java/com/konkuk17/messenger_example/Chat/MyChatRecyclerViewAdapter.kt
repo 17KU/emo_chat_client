@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import com.konkuk17.messenger_example.Friends.FriendRecycleViewData
 
 import com.konkuk17.messenger_example.databinding.FragmentChatBinding
 import org.w3c.dom.Text
@@ -11,6 +12,13 @@ import org.w3c.dom.Text
 class MyChatRecyclerViewAdapter(
     private var values: ArrayList<Chatting>
 ) : RecyclerView.Adapter<MyChatRecyclerViewAdapter.MyViewHolder>() {
+
+    var displayChattingList = ArrayList<Chatting>()
+
+    init {
+        displayChattingList.addAll(values)
+    }
+
 
     interface ChatListClickListener{
         fun onChatListClick(position : Int, item : Chatting)
@@ -24,15 +32,15 @@ class MyChatRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item = values[position]
+        val item = displayChattingList[position]
         holder.chat_title.text = item.chat_title
 
         holder.binding.frChatLayout.setOnClickListener {
-            chatListClickListener?.onChatListClick(position, values[position])
+            chatListClickListener?.onChatListClick(position, displayChattingList[position])
         }
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = displayChattingList.size
 
     inner class MyViewHolder(val binding: FragmentChatBinding) : RecyclerView.ViewHolder(binding.root) {
         lateinit var chat_title : TextView
@@ -40,5 +48,23 @@ class MyChatRecyclerViewAdapter(
             chat_title = binding.frChatTvChatTitle
         }
     }
+
+
+    fun filter(name : String){
+        displayChattingList.clear()
+        if(name.length == 0){
+            displayChattingList.addAll(values)
+        }
+        else{
+            for(chat in values){
+                if(chat.chat_other_id!!.contains(name)){
+                    displayChattingList.add(chat)
+                }
+            }
+        }
+
+        notifyDataSetChanged()
+    }
+
 
 }

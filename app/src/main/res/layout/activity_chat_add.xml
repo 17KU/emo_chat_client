@@ -47,15 +47,7 @@
             android:inputType="textPersonName"
             android:hint="친구 이름을 검색하세요."/>
 
-        <Button
-            android:id="@+id/chatadd_btn_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#EA9F9F"
-            android:text="검색"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
