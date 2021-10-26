@@ -45,8 +45,6 @@ class ChatAddActivity : AppCompatActivity() {
         friendList = intent.getSerializableExtra("friendList") as ArrayList<FriendRecycleViewData>
 
 
-
-
         //리사이클러뷰 init
         var myAdapter = FriendRVAdapter(friendList!!)
         myAdapter.listener = object : FriendRVAdapter.onFriendSelectedListener {
@@ -79,6 +77,10 @@ class ChatAddActivity : AppCompatActivity() {
             myAdapter.filter(name)
         }
 
+        binding.chataddIvBack.setOnClickListener {
+            finish()
+        }
+
     }
 
     fun insertChatting(myUserId: String, myFriendId: String) {
@@ -99,7 +101,7 @@ class ChatAddActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Chatting>, response: Response<Chatting>) {
                 val chatting: Chatting? = response.body()
                 if (chatting != null) {
-                    if (chatting?.code == "0004" || chatting?.code == "0005") {
+                    if (chatting?.code != "0001") {
 
                         var newChatting = Chatting(
                             chatting.chat_index,
@@ -121,10 +123,10 @@ class ChatAddActivity : AppCompatActivity() {
                         msgIntent.putExtra("friendName", newChatting.chat_title)
                         msgIntent.putExtra("myUid", userId)
                         startActivity(msgIntent)
-                    } else if (chatting?.code == "0003" || chatting?.code == "0002") {
-                        Toast.makeText(this@ChatAddActivity, "이미 존재하는 채팅방입니다.", Toast.LENGTH_SHORT)
-                        Log.d("retrofit", "이미 존재하는 채팅방입니다.")
-                    } else if (chatting?.code == "0001") {
+                        Log.d("retrofit", "code : "+ chatting?.code)
+                        Log.d("retrofit", "msg : "+ chatting?.msg)
+                    }
+                    else if (chatting?.code == "0001") {
                         Toast.makeText(this@ChatAddActivity, "친구 관계가 아닙니다.", Toast.LENGTH_SHORT)
                         Log.d("retrofit", "친구 관계가 아닙니다.")
                     }

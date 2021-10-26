@@ -54,6 +54,7 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         //item add
         chatAdapter = MyChatRecyclerViewAdapter(items)
         chatAdapter.chatListClickListener = object : MyChatRecyclerViewAdapter.ChatListClickListener{
@@ -72,7 +73,6 @@ class ChatFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(this@ChatFragment.requireContext())
         binding.fgChatRecyclerview.layoutManager = linearLayoutManager
         binding.fgChatRecyclerview.setHasFixedSize(true)
-
 
 
         dataInit()
@@ -163,8 +163,16 @@ class ChatFragment : Fragment() {
 
         //채팅 리스트 검색
         binding.chatlistIvSearchChat.setOnClickListener {
+            var user_id : String = myIdViewModel.myId.value.toString()
+            var chattingList :ArrayList<Chatting> = arrayListOf()
+            chattingList.addAll(items)
 
+            var intentChatSearch = Intent(this@ChatFragment.requireContext(), ChatSearchActivity::class.java)
+            intentChatSearch.putExtra("chattingList", chattingList)
+            intentChatSearch.putExtra("myUserId", user_id)
+            startActivity(intentChatSearch)
         }
+
 
     }
 }
