@@ -59,10 +59,10 @@ class ChatFragment : Fragment() {
         chatAdapter.chatListClickListener = object : MyChatRecyclerViewAdapter.ChatListClickListener{
             override fun onChatListClick(position: Int, item: Chatting) {
                 var msgIntent = Intent(this@ChatFragment.requireContext(), MessageActivity::class.java)
-                msgIntent.putExtra("chat_index", item.chat_index)
-                msgIntent.putExtra("chat_other_id", item.chat_other_id)
-                msgIntent.putExtra("chat_title", item.chat_title)
-                msgIntent.putExtra("user_id", myIdViewModel.myId.value)
+                msgIntent.putExtra("roomIndex", item.chat_index)
+                msgIntent.putExtra("friendUid", item.chat_other_id)
+                msgIntent.putExtra("friendName", item.chat_title)
+                msgIntent.putExtra("myUid", myIdViewModel.myId.value)
                 startActivity(msgIntent)
             }
 
