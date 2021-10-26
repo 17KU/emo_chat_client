@@ -63,7 +63,7 @@ class ChatFragment : Fragment() {
                 msgIntent.putExtra("chat_other_id", item.chat_other_id)
                 msgIntent.putExtra("chat_title", item.chat_title)
                 msgIntent.putExtra("user_id", myIdViewModel.myId.value)
-                startActivity(myintent)
+                startActivity(msgIntent)
             }
 
         }

@@ -248,7 +248,7 @@ class MessageActivity : AppCompatActivity() {
                     message.text = data.message
                     message.setBackgroundResource(R.drawable.left_bubble)
 
-
+                    emoBtn.visibility = View.VISIBLE
                     emoBtn.setOnClickListener {
                         emoService.GetEmotion(data.message.toString()).enqueue(object:
                             Callback<EmoOutput> {
