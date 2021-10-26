@@ -10,6 +10,13 @@ data class ChatModel (
 
     inner class Comment(
         var uid : String?,
-        var message : String?
+        var message : String?,
+        var m_type : String?
     )
 }
+
+/*
+m_type
+1 -> message text
+2 -> emoticon
+ */

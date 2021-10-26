@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:id="@+id/messageItem_mainlayout"
+    android:gravity="left"
     >
 
     <LinearLayout
@@ -29,6 +30,11 @@
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/empty_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/messageItem_emo_btn"
@@ -41,6 +47,11 @@
         android:id="@+id/messageItem_textView"
         android:layout_width="wrap_content"
         android:layout_height="50dp"/>
+
+    <ImageView
+        android:id="@+id/messageItem_emo_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
 
 
 

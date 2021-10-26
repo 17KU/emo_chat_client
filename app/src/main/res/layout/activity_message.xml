@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".ChatRoom.MessageActivity">
 
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_recyclerview"
         android:layout_width="wrap_content"
@@ -33,7 +35,97 @@
         android:layout_height="wrap_content"
         android:text="전송"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+
+        />
+
+    <FrameLayout
+        android:id="@+id/messageView_Framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    />
+            </TableRow>
+            <TableRow
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    />
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="20dp"
+                    />
+            </TableRow>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                >
+
+                <TextView
+                    android:layout_marginLeft="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="태그"
+                    android:textSize="35sp"
+                    />
+                <TextView
+                    android:id="@+id/messageView_emotion"
+                    android:layout_marginLeft="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:textSize="35sp"
+                    />
+                <Button
+                    android:text="SEND"
+                    android:id="@+id/messageView_sendEmo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"/>
+            </LinearLayout>
+
+        </TableLayout>
+
+
+
+    </FrameLayout>
 
 
 </RelativeLayout>
