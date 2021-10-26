@@ -1,14 +1,18 @@
 package com.konkuk17.messenger_example.ChatRoom
 
+import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
@@ -32,6 +36,7 @@ class MessageActivity : AppCompatActivity() {
     lateinit var messageAdapter : MessageRecyclerViewAdapter
     lateinit var linearLayoutManager : LinearLayoutManager
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMessageBinding.inflate(layoutInflater)
@@ -50,51 +55,54 @@ class MessageActivity : AppCompatActivity() {
         var msgEditTextbind = binding.msgactiEtMsg
         //recyclerview bind
         var msgRecyclerViewBind = binding.messageRecyclerview
-        //framelayout bind
-        var msgFrameLayout = binding.messageViewFramelayout
 
-        //emo send btn bind
-        var msgEmoBtnBind = binding.messageViewSendEmo
-
-        checkChatRoom(msgRecyclerViewBind)
 
 
 
+        checkChatRoom(msgRecyclerViewBind)
 
         binding.msgactiBtnSubmit.setOnClickListener {
 
 
-            if(msgEditTextbind.text.toString().equals("")){
-                //입력이 빈칸
-            }
-            else{
-                //입력 있을 때
-                var comment : ChatModel.Comment = ChatModel().Comment(myUid, msgEditTextbind.text.toString(),"1")
-                FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener {task->
-                    if(task.isSuccessful){
-                        msgEditTextbind.setText("")
-                    }
+            if(!chatRoomUid.equals("")){
+                if(msgEditTextbind.text.toString().equals("")){
+                    //입력이 빈칸
                 }
+                else{
+                    //입력 있을 때
+                    var comment : ChatModel.Comment = ChatModel().Comment(myUid, msgEditTextbind.text.toString(),"1")
+                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener {task->
+                        if(task.isSuccessful){
+                            msgEditTextbind.setText("")
 
+                        }
+                    }
+
+                }
             }
+
         }
+
+
+        binding.emoImg1.setOnClickListener {
+            
+        }
+
+
 
 
     }
 
 
 
-    fun checkChatRoom(msgRecyclerViewBind: RecyclerView ){
+    fun checkChatRoom(msgRecyclerViewBind: RecyclerView){
+
 
         //user(보내는 쪽) id가 포함된 채팅방 목록 정렬
         FirebaseDatabase.getInstance().getReference().child("chatrooms").orderByChild("roomIndex").equalTo(roomindex).addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(item in snapshot.children){
 
-                    Log.d("fire","체크함수 안")
-                    chatRoomUid = item.key.toString()
-                    Log.d("fire",chatRoomUid)
-
+                if(!snapshot.exists()){
                     //채팅방 없으면 파이어베이스에 만들어주기
                     if(myUid != null && friendUid != null) {
                         var chatModel: ChatModel = ChatModel()
@@ -105,36 +113,66 @@ class MessageActivity : AppCompatActivity() {
 
                         if(chatRoomUid.equals("")) {
                             Log.d("fire","룸아이디 빈칸")
-                            FirebaseDatabase.getInstance().getReference().child("chatrooms").push()
-                                .setValue(chatModel).addOnSuccessListener {
-                                    //Toast.makeText(this@MessageActivity,"success",Toast.LENGTH_LONG).show()
-                                    Log.d("fire","성공")
 
-                                }
-                                .addOnFailureListener{
-                                    //Toast.makeText(this@MessageActivity,"fail",Toast.LENGTH_LONG).show()
-                                    Log.d("fire","실패")
-                                }
+                            var pushKey = FirebaseDatabase.getInstance().getReference().child("chatrooms").push()
+                            chatRoomUid = pushKey.key.toString()
+                            pushKey.setValue(chatModel)
+
+                            //실시간으로 메시지 갱신하기 위한 recycler view 어뎁터 연결
+                            messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid,myUid,friendUid,friendName, msgRecyclerViewBind,binding)
+                            msgRecyclerViewBind.adapter = messageAdapter
+
+                            linearLayoutManager = LinearLayoutManager(this@MessageActivity)
+                            msgRecyclerViewBind.layoutManager = linearLayoutManager
+                            msgRecyclerViewBind.setHasFixedSize(true)
+
+                            messageAdapter.notifyDataSetChanged()
                         }
+
                     }
 
-                    //실시간으로 메시지 갱신하기 위한 recycler view 어뎁터 연결
-                    messageAdapter = MessageRecyclerViewAdapter(this@MessageActivity,chatRoomUid,myUid,friendUid,friendName, msgRecyclerViewBind)
-                    msgRecyclerViewBind.adapter = messageAdapter
-
-                    linearLayoutManager = LinearLayoutManager(this@MessageActivity)
-                    msgRecyclerViewBind.layoutManager = linearLayoutManager
-                    msgRecyclerViewBind.setHasFixedSize(true)
-
-                    messageAdapter.notifyDataSetChanged()
-
                 }
+                else {
+                    for (item in snapshot.children) {
+
+                        Log.d("fire", "체크함수 안")
+                        chatRoomUid = item.key.toString()
+                        Log.d("fire", chatRoomUid)
+
+                        //실시간으로 메시지 갱신하기 위한 recycler view 어뎁터 연결
+                        messageAdapter = MessageRecyclerViewAdapter(
+                            this@MessageActivity,
+                            chatRoomUid,
+                            myUid,
+                            friendUid,
+                            friendName,
+                            msgRecyclerViewBind,
+                            binding
+                        )
+                        msgRecyclerViewBind.adapter = messageAdapter
+
+                        linearLayoutManager = LinearLayoutManager(this@MessageActivity)
+                        msgRecyclerViewBind.layoutManager = linearLayoutManager
+                        msgRecyclerViewBind.setHasFixedSize(true)
+
+                        messageAdapter.notifyDataSetChanged()
+
+                    }
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.d("fire","chech chat room error")
             }
         })
+
+
+
+
+
+
+
     }
 
     class MessageRecyclerViewAdapter(
@@ -145,15 +183,16 @@ class MessageActivity : AppCompatActivity() {
         private var friendUid: String?,
         private var friendName: String,
 
-        private var msgRecyclerViewBind: RecyclerView
+        private var msgRecyclerViewBind: RecyclerView,
+        private var msgViewBinding: ActivityMessageBinding
 
         ): RecyclerView.Adapter<MessageRecyclerViewAdapter.MyViewHolder>(){
 
         //var comments :List<ChatModel.Comment> = ArrayList<ChatModel.Comment>()
-        lateinit var comments: MutableList<ChatModel.Comment>
+        var comments: MutableList<ChatModel.Comment>
 
-        lateinit var emoService: EmoService
-        lateinit var retrofit: Retrofit.Builder
+        var emoService: EmoService
+        var retrofit: Retrofit.Builder
 
         init{
             //comments = ArrayList<ChatModel.Comment>()
@@ -225,7 +264,7 @@ class MessageActivity : AppCompatActivity() {
                 if(data.uid.equals(myUid)){
                     //메세지일때
                     if(data.m_type.equals("1")){
-                        emoImage.visibility = View.INVISIBLE
+                        emoImage.visibility = View.GONE
                         itemLayout.gravity = Gravity.RIGHT
 
                         message.text = data.message
@@ -237,7 +276,12 @@ class MessageActivity : AppCompatActivity() {
 
                         emptyView.visibility = View.VISIBLE
 
+                        msgViewBinding.messageViewFramelayout.visibility = View.GONE
+                        msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
+                        msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
+
                         emoBtn.setOnClickListener {
+
                             emoService.GetEmotion(data.message.toString()).enqueue(object:
                                 Callback<EmoOutput> {
                                 override fun onResponse(
@@ -245,23 +289,89 @@ class MessageActivity : AppCompatActivity() {
                                     response: Response<EmoOutput>
                                 ) {
                                     var emotion = response.body()
-                                    Log.d("fire",emotion?.emotion.toString())
+
+                                    val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                                    imm.hideSoftInputFromWindow(msgViewBinding.msgactiEtMsg.windowToken,0)
+
+
+
+                                    msgViewBinding.messageViewFramelayout.visibility = View.VISIBLE
+                                    msgViewBinding.msgactiBtnSubmit.visibility = View.GONE
+                                    msgViewBinding.msgactiEtMsg.visibility = View.GONE
+
+                                    var emo_txt = msgViewBinding.messageViewFramelayout.findViewById<TextView>(R.id.messageView_emotion)
+                                    var emo_img1 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img1)
+                                    var emo_img2 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img2)
+                                    var emo_img3 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img3)
+                                    var emo_img4 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img4)
+                                    var emo_img5 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img5)
+                                    var emo_img6 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img6)
+
                                     if(emotion?.emotion.toString().equals("0")){
                                         Log.d("fire","놀람")
+                                        emo_txt.text = "놀라움"
+
+                                        emo_img1.setImageResource(R.drawable.money)
+                                        emo_img2.setImageResource(R.drawable.money)
+                                        emo_img3.setImageResource(R.drawable.money)
+                                        emo_img4.setImageResource(R.drawable.money)
+                                        emo_img5.setImageResource(R.drawable.money)
+                                        emo_img6.setImageResource(R.drawable.money)
                                     }
                                     else if(emotion?.emotion.toString().equals("1")){
                                         Log.d("fire","분노")
+                                        emo_txt.text = "화남"
+
+                                        emo_img1.setImageResource(R.drawable.book)
+                                        emo_img2.setImageResource(R.drawable.book)
+                                        emo_img3.setImageResource(R.drawable.book)
+                                        emo_img4.setImageResource(R.drawable.book)
+                                        emo_img5.setImageResource(R.drawable.book)
+                                        emo_img6.setImageResource(R.drawable.book)
                                     }
                                     else if(emotion?.emotion.toString().equals("2")){
                                         Log.d("fire","불안")
+                                        emo_txt.text = "불안함"
+
+                                        emo_img1.setImageResource(R.drawable.money)
+                                        emo_img2.setImageResource(R.drawable.money)
+                                        emo_img3.setImageResource(R.drawable.money)
+                                        emo_img4.setImageResource(R.drawable.money)
+                                        emo_img5.setImageResource(R.drawable.money)
+                                        emo_img6.setImageResource(R.drawable.money)
                                     }
                                     else if(emotion?.emotion.toString().equals("3")){
                                         Log.d("fire","슬픔")
+                                        emo_txt.text = "슬픔"
+
+                                        emo_img1.setImageResource(R.drawable.money)
+                                        emo_img2.setImageResource(R.drawable.money)
+                                        emo_img3.setImageResource(R.drawable.money)
+                                        emo_img4.setImageResource(R.drawable.money)
+                                        emo_img5.setImageResource(R.drawable.money)
+                                        emo_img6.setImageResource(R.drawable.money)
                                     }
                                     else if(emotion?.emotion.toString().equals("4")){
                                         Log.d("fire","중립")
+                                        emo_txt.text = "중립"
+
+                                        emo_img1.setImageResource(R.drawable.money)
+                                        emo_img2.setImageResource(R.drawable.money)
+                                        emo_img3.setImageResource(R.drawable.money)
+                                        emo_img4.setImageResource(R.drawable.money)
+                                        emo_img5.setImageResource(R.drawable.money)
+                                        emo_img6.setImageResource(R.drawable.money)
+
                                     }else if(emotion?.emotion.toString().equals("5")){
                                         Log.d("fire","행복")
+                                        emo_txt.text = "행복함"
+
+                                        emo_img1.setImageResource(R.drawable.money)
+                                        emo_img2.setImageResource(R.drawable.money)
+                                        emo_img3.setImageResource(R.drawable.money)
+                                        emo_img4.setImageResource(R.drawable.money)
+                                        emo_img5.setImageResource(R.drawable.money)
+                                        emo_img6.setImageResource(R.drawable.money)
                                     }
 
 
@@ -278,11 +388,12 @@ class MessageActivity : AppCompatActivity() {
                     }
                     else if(data.m_type.equals("2")){
                         emoImage.visibility = View.VISIBLE
+                        msgViewBinding.messageViewFramelayout.visibility = View.INVISIBLE
                     }
                 }
                 //친구 아이디이면
                 else if(data.uid.equals(friendUid)){
-                    emoImage.visibility = View.INVISIBLE
+                    emoImage.visibility = View.GONE
                     pImage.setImageResource(R.drawable.ic_baseline_person_24)
                     name.text = friendName
                     message.text = data.message
@@ -292,6 +403,10 @@ class MessageActivity : AppCompatActivity() {
                     itemLayout.gravity = Gravity.LEFT
 
                     emoBtn.visibility = View.INVISIBLE
+
+                    msgViewBinding.messageViewFramelayout.visibility = View.GONE
+                    msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
+                    msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
 
                 }
             }

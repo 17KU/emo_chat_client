@@ -8,22 +8,18 @@
     tools:context=".ChatRoom.MessageActivity">
 
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_recyclerview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/msgacti_btn_submit"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="-1dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="1dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        />
 
     <EditText
         android:id="@+id/msgacti_et_msg"
@@ -43,6 +39,7 @@
 
         />
 
+
     <FrameLayout
         android:id="@+id/messageView_Framelayout"
         android:layout_width="match_parent"
@@ -50,27 +47,34 @@
         android:visibility="invisible"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:background="@color/white"
+        >
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+
+            >
 
             <TableRow
                 android:gravity="center"
                 >
 
                 <ImageView
+                    android:id="@+id/emo_img1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="20dp"
                     />
                 <ImageView
+                    android:id="@+id/emo_img2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="20dp"
                     />
                 <ImageView
+                    android:id="@+id/emo_img3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="20dp"
@@ -81,16 +85,19 @@
                 >
 
                 <ImageView
+                    android:id="@+id/emo_img4"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="20dp"
                     />
                 <ImageView
+                    android:id="@+id/emo_img5"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="20dp"
                     />
                 <ImageView
+                    android:id="@+id/emo_img6"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="20dp"
