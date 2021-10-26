@@ -1,4 +1,5 @@
 package com.konkuk17.messenger_example.ChatRoom
 
-class EmoOutput {
-}
+data class EmoOutput (
+    var emotion : String
+)

@@ -8,15 +8,17 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityMessageBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.ArrayList
 
 class MessageActivity : AppCompatActivity() {
@@ -176,12 +178,21 @@ class MessageActivity : AppCompatActivity() {
         //var comments :List<ChatModel.Comment> = ArrayList<ChatModel.Comment>()
         lateinit var comments: MutableList<ChatModel.Comment>
 
+        lateinit var emoService: EmoService
+        lateinit var retrofit: Retrofit.Builder
+
         init{
             //comments = ArrayList<ChatModel.Comment>()
             comments = ArrayList<ChatModel.Comment>()
 
 
             getMessageList()
+
+            retrofit = Retrofit.Builder()
+
+            emoService = retrofit.baseUrl("http://203.252.166.72:80")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(EmoService::class.java)
 
         }
 
@@ -220,35 +231,75 @@ class MessageActivity : AppCompatActivity() {
         inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             private val message = itemView.findViewById<TextView>(R.id.messageItem_textView)
             private val name = itemView.findViewById<TextView>(R.id.messageItem_name)
-            private val p_image = itemView.findViewById<ImageView>(R.id.messageItem_profile_image)
-            private val linear_layout = itemView.findViewById<LinearLayout>(R.id.messageItem_linear)
+            private val pImage = itemView.findViewById<ImageView>(R.id.messageItem_profile_image)
+            private val linearLayout = itemView.findViewById<LinearLayout>(R.id.messageItem_linear)
 
-            private val item_layout = itemView.findViewById<LinearLayout>(R.id.messageItem_mainlayout)
+            private val itemLayout = itemView.findViewById<LinearLayout>(R.id.messageItem_mainlayout)
+
+            private val emoBtn = itemView.findViewById<Button>(R.id.messageItem_emo_btn)
 
             fun bind(data:ChatModel.Comment, context:Context){
 
                 //내 아이디이면
                 if(data.uid.equals(myUid)){
                     //item_layout.gravity = Gravity.RIGHT
-                    item_layout.setHorizontalGravity(Gravity.RIGHT)
+                    itemLayout.setHorizontalGravity(Gravity.RIGHT)
 
                     message.text = data.message
                     message.setBackgroundResource(R.drawable.left_bubble)
-                    linear_layout.visibility = View.INVISIBLE
 
 
+                    emoBtn.setOnClickListener {
+                        emoService.GetEmotion(data.message.toString()).enqueue(object:
+                            Callback<EmoOutput> {
+                            override fun onResponse(
+                                call: Call<EmoOutput>,
+                                response: Response<EmoOutput>
+                            ) {
+                                var emotion = response.body()
+                                Log.d("fire",emotion?.emotion.toString())
+                                if(emotion?.emotion.toString().equals("0")){
+                                    Log.d("fire","놀람")
+                                }
+                                else if(emotion?.emotion.toString().equals("1")){
+                                    Log.d("fire","분노")
+                                }
+                                else if(emotion?.emotion.toString().equals("2")){
+                                    Log.d("fire","불안")
+                                }
+                                else if(emotion?.emotion.toString().equals("3")){
+                                    Log.d("fire","슬픔")
+                                }
+                                else if(emotion?.emotion.toString().equals("4")){
+                                    Log.d("fire","중립")
+                                }else if(emotion?.emotion.toString().equals("5")){
+                                    Log.d("fire","행복")
+                                }
+
+
+
+                            }
+
+                            override fun onFailure(call: Call<EmoOutput>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
+                            }
+                        )
+                    }
+                    linearLayout.visibility = View.INVISIBLE
                 }
                 //친구 아이디이면
                 else if(data.uid.equals(friendUid)){
-                    p_image.setImageResource(R.drawable.ic_baseline_person_24)
+                    pImage.setImageResource(R.drawable.ic_baseline_person_24)
                     name.text = friendName
                     message.text = data.message
                     message.setBackgroundResource(R.drawable.right_bubble)
-                    linear_layout.visibility = View.VISIBLE
+                    linearLayout.visibility = View.VISIBLE
 
                     //item_layout.gravity = Gravity.LEFT
-                    item_layout.setHorizontalGravity(Gravity.LEFT)
+                    itemLayout.setHorizontalGravity(Gravity.LEFT)
 
+                    emoBtn.visibility = View.INVISIBLE
                 }
             }
 
