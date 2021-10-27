@@ -26,4 +26,11 @@ interface FriendService {
         @Field("user_id") user_id : String,
         @Field("favorite_add") favorite_add : String
     ) : Call<AddFriendOutput>
+
+    @FormUrlEncoded
+    @POST("/friends/delete_friend")
+    fun DeleteFriend(
+        @Field("user_id") user_id : String,
+        @Field("delete_friend_id") delete_friend_id : String
+    ): Call<DeleteFriendOutput>
 }

@@ -1,6 +1,7 @@
 package com.konkuk17.messenger_example.Friends
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -105,7 +106,7 @@ class FriendFragment : Fragment() {
 
                 var favorite_add = friendRecycleViewData.id
 
-                Toast.makeText(this@FriendFragment.requireContext(),favorite_add,Toast.LENGTH_LONG).show()
+                //Toast.makeText(this@FriendFragment.requireContext(),favorite_add,Toast.LENGTH_LONG).show()
 
                 //친구 즐겨찾기 추가
                 //어댑터에 익명 리스너 붙이기 위해 여기에 코드 작성
@@ -129,6 +130,52 @@ class FriendFragment : Fragment() {
 
                 }
                 )
+            }
+
+            friendAdapter.friendListClickListener = object : FriendRecycleViewAdapter.FriendListClickListener{
+                override fun onFriendListLongClick(position: Int, item: FriendRecycleViewData) {
+                    Log.d("test",item.id)
+
+                    var dialog = AlertDialog.Builder(this@FriendFragment.requireContext())
+                        .setTitle("친구 삭제")
+                        .setMessage(item.name+"님을 친구에서 삭제하시겠습니까?")
+                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                            friendService.DeleteFriend(user_id, item.id)
+                                .enqueue(object : Callback<DeleteFriendOutput>{
+                                    override fun onResponse(
+                                        call: Call<DeleteFriendOutput>,
+                                        response: Response<DeleteFriendOutput>
+                                    ) {
+                                        var result = response.body()
+                                        if(result?.code.equals("0000")){
+                                            FriendListUpdate(friendService,friendAdapter)
+                                        }
+                                        else if(result?.code.equals("0001")){
+                                            Toast.makeText(this@FriendFragment.requireContext(), "아이디 없음.", Toast.LENGTH_SHORT).show()
+
+                                        }
+                                        else if(result?.code.equals("0002")){
+                                            Toast.makeText(this@FriendFragment.requireContext(), "본인 삭제 불가.", Toast.LENGTH_SHORT).show()
+
+                                        }
+                                        else if(result?.code.equals("0003")){
+                                            Toast.makeText(this@FriendFragment.requireContext(), "친구가 아님.", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                    override fun onFailure(
+                                        call: Call<DeleteFriendOutput>,
+                                        t: Throwable
+                                    ) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
+                        })
+                        .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+
+                        })
+                    dialog.show()
+                }
             }
 
             friendRecycleView.adapter = friendAdapter
