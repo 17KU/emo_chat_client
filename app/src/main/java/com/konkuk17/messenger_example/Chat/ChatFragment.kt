@@ -67,6 +67,13 @@ class ChatFragment : Fragment() {
                 startActivity(msgIntent)
             }
 
+            override fun onChatListLongClick(position: Int, item: Chatting) {
+                var dialog = AlertDialog.Builder(this@ChatFragment.requireContext())
+                    .setTitle("채팅방 삭제")
+                    .setMessage(item.chat_title+"님과의 채팅방을 삭제하시겠습니까?")
+                    //.setPositiveButton()
+            }
+
         }
         Log.d("chatFrag", "Adpater 달아주기 직전")
         binding.fgChatRecyclerview.adapter = chatAdapter
@@ -80,17 +87,6 @@ class ChatFragment : Fragment() {
         Log.d("chatFrag", "buttoninit 직전")
         buttonInit()
 
-        /*
-        var friendList :ArrayList<FriendRecycleViewData>? = myIdViewModel.getFriendList()
-        Log.d("friendList LOG", "size : "+ friendList?.size)
-
-        if(friendList != null) {
-            for (onefriend in friendList) {
-                Log.d("friendList LOG", onefriend.name +" / "+ onefriend.id + " / "+ onefriend.favorite)
-            }
-        }
-
-         */
 
     }
 

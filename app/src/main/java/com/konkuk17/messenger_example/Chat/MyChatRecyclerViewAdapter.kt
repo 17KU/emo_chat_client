@@ -25,6 +25,8 @@ class MyChatRecyclerViewAdapter(
 
     interface ChatListClickListener{
         fun onChatListClick(position : Int, item : Chatting)
+
+        fun onChatListLongClick(position: Int, item : Chatting)
     }
 
     var chatListClickListener : ChatListClickListener? = null
@@ -41,6 +43,11 @@ class MyChatRecyclerViewAdapter(
 
         holder.binding.frChatLayout.setOnClickListener {
             chatListClickListener?.onChatListClick(position, values[position])
+        }
+
+        holder.binding.frChatLayout.setOnLongClickListener {
+            chatListClickListener?.onChatListLongClick(position, values[position])
+            true
         }
     }
 
