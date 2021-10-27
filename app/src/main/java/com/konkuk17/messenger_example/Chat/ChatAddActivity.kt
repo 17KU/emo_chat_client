@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.konkuk17.messenger_example.ChatRoom.MessageActivity
 import com.konkuk17.messenger_example.Friends.FriendRecycleViewAdapter
 import com.konkuk17.messenger_example.Friends.FriendRecycleViewData
+import com.konkuk17.messenger_example.Main.MainActivity
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityChatAddBinding
 import com.konkuk17.messenger_example.databinding.FriendrecycleItemInChattingBinding
@@ -78,6 +79,9 @@ class ChatAddActivity : AppCompatActivity() {
         }
 
         binding.chataddIvBack.setOnClickListener {
+            var mainIntent = Intent(this, MainActivity::class.java)
+            mainIntent.putExtra("selectedPage", "chattingPage")
+            startActivity(mainIntent)
             finish()
         }
 
@@ -123,6 +127,7 @@ class ChatAddActivity : AppCompatActivity() {
                         msgIntent.putExtra("friendName", newChatting.chat_title)
                         msgIntent.putExtra("myUid", userId)
                         startActivity(msgIntent)
+                        finish()
                         Log.d("retrofit", "code : "+ chatting?.code)
                         Log.d("retrofit", "msg : "+ chatting?.msg)
                     }

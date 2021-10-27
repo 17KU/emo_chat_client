@@ -39,6 +39,17 @@ class MainActivity : AppCompatActivity() {
         val myName : String = intent.getStringExtra("myName").toString()
         idViewModel.setMyId(myId)
         idViewModel.setMyNmae(myName)
+
+        //ChatAddActivity에서 받아온 값이 있을 경우 실행
+        /*
+        var selectedPage = intent.getStringExtra("selectedPage")
+        if (selectedPage == "chattingPage"){
+            binding.tablayout.setScrollPosition(1,0f,true)
+            binding.viewPager.setCurrentItem(1)
+        }
+
+
+         */
     }
 
 }

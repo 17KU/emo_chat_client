@@ -39,20 +39,63 @@ class SignupActivity : AppCompatActivity() {
             btnDupliCheck.setOnClickListener {
                 //나중에 구현
                 var user_id = textId.text.toString()
+                signupService.requestCheck(user_id)
+                    .enqueue(object : Callback<MyResponse>{
+                        override fun onResponse(call: Call<MyResponse>, response: Response<MyResponse>) {
+
+                            var signup = response.body()
+
+                            var dialog = AlertDialog.Builder(this@SignupActivity)
+
+                            if(signup?.code.equals("0000")){
+                                dialog.setTitle("사용 가능한 아이디")
+                                    .setMessage("사용 가능한 아이디입니다.")
+                                    .setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
+                                    }
+                                    .show()
+                            }
+                            else if(signup?.code.equals("0001")){
+                                dialog.setTitle("사용 불가능한 아이디")
+                                    .setMessage("동일한 아이디가 이미 존재합니다.")
+                                    .setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
+                                    }
+                                    .show()
+                            }
+                            else{
+                                dialog.setTitle("중복체크 오류")
+                                    .setMessage("code = " + signup?.code + ", msg = " + signup?.msg)
+                                    .setPositiveButton("확인") { dialogInterface: DialogInterface, i: Int ->
+                                    }
+                                    .show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<MyResponse>, t: Throwable) {
+                            Log.d("signup debug", t.message.toString())
+                            var dialog = AlertDialog.Builder(this@SignupActivity)
+                                .setTitle("실패")
+                                .setMessage("웹 통신에 실패했습니다.")
+                                .setPositiveButton("확인") { _, _ ->
+                                }
+                                .show()
+                        }
+
+
+                    })
 
             }
 
-            btnSingupFinish.setOnClickListener {
+            btnSignupFinish.setOnClickListener {
 
                 var user_id = textId.text.toString()
                 var user_pw = textPw.text.toString()
                 var user_name = textName.text.toString()
 
-                signupService.reqeustSingup(user_id, user_pw, user_name)
-                    .enqueue(object : Callback<Signup> {
+                signupService.requestSingup(user_id, user_pw, user_name)
+                    .enqueue(object : Callback<MyResponse> {
 
                         //웹통신에 성공했을때 실행되는 코드. 응답값을 받아옴.
-                        override fun onResponse(call: Call<Signup>, response: Response<Signup>) {
+                        override fun onResponse(call: Call<MyResponse>, response: Response<MyResponse>) {
                             var signup = response.body()
 
                             var dialog = AlertDialog.Builder(this@SignupActivity)
@@ -84,7 +127,7 @@ class SignupActivity : AppCompatActivity() {
                         }
 
                         //웹통신에 실패했을때 실행되는 코드
-                        override fun onFailure(call: Call<Signup>, t: Throwable) {
+                        override fun onFailure(call: Call<MyResponse>, t: Throwable) {
                             Log.d("signup debug", t.message.toString())
                             var dialog = AlertDialog.Builder(this@SignupActivity)
                                 .setTitle("실패")
@@ -96,6 +139,10 @@ class SignupActivity : AppCompatActivity() {
                         }
                     })
 
+            }
+
+            btnSignupCancle.setOnClickListener {
+                finish()
             }
         }
 
