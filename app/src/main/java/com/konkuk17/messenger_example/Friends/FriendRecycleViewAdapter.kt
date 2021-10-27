@@ -19,6 +19,12 @@ class FriendRecycleViewAdapter(
     private val itemClick: (FriendRecycleViewData) -> Unit
 ) : RecyclerView.Adapter<FriendRecycleViewAdapter.ItemViewHolder>(){
 
+    var allFriendList = ArrayList<FriendRecycleViewData>()
+
+    init{
+        allFriendList.addAll(dataList)
+    }
+
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val friendName = itemView.findViewById<TextView>(R.id.friend_name)
         private val friendImg = itemView.findViewById<ImageView>(R.id.friend_img)
@@ -28,7 +34,7 @@ class FriendRecycleViewAdapter(
 
         fun bind(friendRecycleViewData: FriendRecycleViewData, context:Context){
             friendName.text = friendRecycleViewData.name
-            friendFavorite.text = friendRecycleViewData.favorite
+            //friendFavorite.text = friendRecycleViewData.favorite
 
 
             if(friendRecycleViewData.favorite.equals("true")){
@@ -61,7 +67,18 @@ class FriendRecycleViewAdapter(
     //SearchFriendd에서 검색을 위해 사용
     fun filter(name: String){
         dataList.clear()
+        if(name.length==0){
+            dataList.addAll(allFriendList)
+        }
+        else{
+            for(chat in allFriendList){
+                if(chat.name!!.contains(name)){
+                    dataList.add(chat)
+                }
+            }
+        }
 
+        notifyDataSetChanged()
     }
 
 

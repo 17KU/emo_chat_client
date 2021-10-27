@@ -153,10 +153,10 @@ class FriendFragment : Fragment() {
 
                 myIdViewModel.setFriendList(friendlist)
                 val intent2 = Intent(this@FriendFragment.requireContext(), SearchFriendActivity::class.java)
-                //intent2.putExtra("myUid",myIdViewModel.myId.value)
+                intent2.putExtra("myUid",myIdViewModel.myId.value)
                 //intent2.putExtra("fList",myIdViewModel.friendList.value)
                 intent2.putExtra("fList", friendlist)
-                startActivity(intent2)
+                startActivityForResult(intent2,101)
             }
 
 
@@ -174,7 +174,7 @@ class FriendFragment : Fragment() {
                 FriendListUpdate(friendService,friendAdapter)
             }
             101->{
-
+                FriendListUpdate(friendService,friendAdapter)
             }
 
         }
