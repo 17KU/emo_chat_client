@@ -57,6 +57,7 @@ class MessageActivity : AppCompatActivity() {
         var msgRecyclerViewBind = binding.messageRecyclerview
 
 
+        var emo_message : String = ""
 
 
         checkChatRoom(msgRecyclerViewBind)
@@ -85,10 +86,145 @@ class MessageActivity : AppCompatActivity() {
 
 
         binding.emoImg1.setOnClickListener {
-            
+            if(binding.messageViewEmotion.text.equals("놀라움")){
+                emo_message = "01"
+            }
+            else if(binding.messageViewEmotion.text.equals("화남")){
+                emo_message = "11"
+            }
+            else if(binding.messageViewEmotion.text.equals("불안함")){
+                emo_message = "21"
+            }
+            else if(binding.messageViewEmotion.text.equals("슬픔")){
+                emo_message = "31"
+            }
+            else if(binding.messageViewEmotion.text.equals("중립")){
+                emo_message = "41"
+            }
+            else if(binding.messageViewEmotion.text.equals("행복함")){
+                emo_message = "51"
+            }
+        }
+
+        binding.emoImg2.setOnClickListener {
+            if(binding.messageViewEmotion.text.equals("놀라움")){
+                emo_message = "02"
+            }
+            else if(binding.messageViewEmotion.text.equals("화남")){
+                emo_message = "12"
+            }
+            else if(binding.messageViewEmotion.text.equals("불안함")){
+                emo_message = "22"
+            }
+            else if(binding.messageViewEmotion.text.equals("슬픔")){
+                emo_message = "32"
+            }
+            else if(binding.messageViewEmotion.text.equals("중립")){
+                emo_message = "42"
+            }
+            else if(binding.messageViewEmotion.text.equals("행복함")){
+                emo_message = "52"
+            }
+        }
+
+        binding.emoImg3.setOnClickListener {
+            if(binding.messageViewEmotion.text.equals("놀라움")){
+                emo_message = "03"
+            }
+            else if(binding.messageViewEmotion.text.equals("화남")){
+                emo_message = "13"
+            }
+            else if(binding.messageViewEmotion.text.equals("불안함")){
+                emo_message = "23"
+            }
+            else if(binding.messageViewEmotion.text.equals("슬픔")){
+                emo_message = "33"
+            }
+            else if(binding.messageViewEmotion.text.equals("중립")){
+                emo_message = "43"
+            }
+            else if(binding.messageViewEmotion.text.equals("행복함")){
+                emo_message = "53"
+            }
+        }
+
+        binding.emoImg4.setOnClickListener {
+            if(binding.messageViewEmotion.text.equals("놀라움")){
+                emo_message = "04"
+            }
+            else if(binding.messageViewEmotion.text.equals("화남")){
+                emo_message = "14"
+            }
+            else if(binding.messageViewEmotion.text.equals("불안함")){
+                emo_message = "24"
+            }
+            else if(binding.messageViewEmotion.text.equals("슬픔")){
+                emo_message = "34"
+            }
+            else if(binding.messageViewEmotion.text.equals("중립")){
+                emo_message = "44"
+            }
+            else if(binding.messageViewEmotion.text.equals("행복함")){
+                emo_message = "54"
+            }
+        }
+        binding.emoImg5.setOnClickListener {
+            if(binding.messageViewEmotion.text.equals("놀라움")){
+                emo_message = "05"
+            }
+            else if(binding.messageViewEmotion.text.equals("화남")){
+                emo_message = "15"
+            }
+            else if(binding.messageViewEmotion.text.equals("불안함")){
+                emo_message = "25"
+            }
+            else if(binding.messageViewEmotion.text.equals("슬픔")){
+                emo_message = "35"
+            }
+            else if(binding.messageViewEmotion.text.equals("중립")){
+                emo_message = "45"
+            }
+            else if(binding.messageViewEmotion.text.equals("행복함")){
+                emo_message = "55"
+            }
+        }
+        binding.emoImg6.setOnClickListener {
+            if(binding.messageViewEmotion.text.equals("놀라움")){
+                emo_message = "06"
+            }
+            else if(binding.messageViewEmotion.text.equals("화남")){
+                emo_message = "16"
+            }
+            else if(binding.messageViewEmotion.text.equals("불안함")){
+                emo_message = "26"
+            }
+            else if(binding.messageViewEmotion.text.equals("슬픔")){
+                emo_message = "36"
+            }
+            else if(binding.messageViewEmotion.text.equals("중립")){
+                emo_message = "46"
+            }
+            else if(binding.messageViewEmotion.text.equals("행복함")){
+                emo_message = "56"
+            }
         }
 
 
+
+        binding.messageViewSendEmo.setOnClickListener {
+            if(!chatRoomUid.equals("")){
+
+                    //입력 있을 때
+                    var comment : ChatModel.Comment = ChatModel().Comment(myUid, emo_message,"2")
+                    FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener {task->
+                        if(task.isSuccessful){
+
+                            binding.messageViewFramelayout.visibility = View.GONE
+                        }
+                    }
+
+            }
+        }
 
 
     }
@@ -264,9 +400,10 @@ class MessageActivity : AppCompatActivity() {
                 if(data.uid.equals(myUid)){
                     //메세지일때
                     if(data.m_type.equals("1")){
-                        emoImage.visibility = View.GONE
+                        emoImage.setImageResource(android.R.color.transparent)
                         itemLayout.gravity = Gravity.RIGHT
 
+                        message.visibility = View.VISIBLE
                         message.text = data.message
                         message.setBackgroundResource(R.drawable.left_bubble)
 
@@ -384,30 +521,174 @@ class MessageActivity : AppCompatActivity() {
                             }
                             )
                         }
-                        linearLayout.visibility = View.INVISIBLE
+                        linearLayout.visibility = View.GONE
                     }
+                    //이모티콘일때
                     else if(data.m_type.equals("2")){
-                        emoImage.visibility = View.VISIBLE
-                        msgViewBinding.messageViewFramelayout.visibility = View.INVISIBLE
+                        itemLayout.gravity = Gravity.RIGHT
+
+                        msgViewBinding.messageViewFramelayout.visibility = View.GONE
+                        msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
+                        msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
+                        message.visibility = View.INVISIBLE
+                        emoBtn.visibility = View.INVISIBLE
+                        emoBtn.gravity = Gravity.RIGHT
+
+
+                        emptyView.visibility = View.VISIBLE
+
+
+
+                        var num : Int = data.message.toString().toInt()
+
+                        when(num/10){
+                            0-> when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            1->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.book)
+                                2 -> emoImage.setImageResource(R.drawable.book)
+                                3 -> emoImage.setImageResource(R.drawable.book)
+                                4->emoImage.setImageResource(R.drawable.book)
+                                5->emoImage.setImageResource(R.drawable.book)
+                                6->emoImage.setImageResource(R.drawable.book)
+                            }
+                            2->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            3->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            4->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            5->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+
+                        }
+
+
                     }
                 }
                 //친구 아이디이면
                 else if(data.uid.equals(friendUid)){
-                    emoImage.visibility = View.GONE
-                    pImage.setImageResource(R.drawable.ic_baseline_person_24)
-                    name.text = friendName
-                    message.text = data.message
-                    message.setBackgroundResource(R.drawable.right_bubble)
-                    linearLayout.visibility = View.VISIBLE
+                    //메세지일떄
+                    if(data.m_type.equals("1")){
+                        emoImage.setImageResource(android.R.color.transparent)
+                        message.visibility = View.VISIBLE
 
-                    itemLayout.gravity = Gravity.LEFT
+                        pImage.setImageResource(R.drawable.ic_baseline_person_24)
+                        name.text = friendName
+                        message.text = data.message
+                        message.setBackgroundResource(R.drawable.right_bubble)
+                        linearLayout.visibility = View.VISIBLE
 
-                    emoBtn.visibility = View.INVISIBLE
+                        itemLayout.gravity = Gravity.LEFT
 
-                    msgViewBinding.messageViewFramelayout.visibility = View.GONE
-                    msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
-                    msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
+                        emoBtn.visibility = View.GONE
 
+                        msgViewBinding.messageViewFramelayout.visibility = View.GONE
+                        msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
+                        msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
+
+
+                        linearLayout.visibility = View.GONE
+
+                    }
+
+                    //이모티콘일때
+                    else if(data.m_type.equals("2")){
+                        emoImage.visibility = View.VISIBLE
+                        msgViewBinding.messageViewFramelayout.visibility = View.GONE
+                        msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
+                        msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
+                        message.visibility = View.GONE
+                        emoBtn.visibility = View.GONE
+
+                        itemLayout.gravity = Gravity.LEFT
+                        emptyView.visibility = View.GONE
+
+
+                        var num : Int = data.message.toString().toInt()
+
+                        when(num/10){
+                            0-> when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            1->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.book)
+                                2 -> emoImage.setImageResource(R.drawable.book)
+                                3 -> emoImage.setImageResource(R.drawable.book)
+                                4->emoImage.setImageResource(R.drawable.book)
+                                5->emoImage.setImageResource(R.drawable.book)
+                                6->emoImage.setImageResource(R.drawable.book)
+                            }
+                            2->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            3->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            4->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+                            5->when(num%10){
+                                1 -> emoImage.setImageResource(R.drawable.money)
+                                2 -> emoImage.setImageResource(R.drawable.money)
+                                3 -> emoImage.setImageResource(R.drawable.money)
+                                4->emoImage.setImageResource(R.drawable.money)
+                                5->emoImage.setImageResource(R.drawable.money)
+                                6->emoImage.setImageResource(R.drawable.money)
+                            }
+
+                        }
+                    }
                 }
             }
 
