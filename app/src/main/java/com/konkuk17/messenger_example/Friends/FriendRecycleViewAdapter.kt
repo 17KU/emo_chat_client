@@ -44,7 +44,7 @@ class FriendRecycleViewAdapter(
 
         fun bind(friendRecycleViewData: FriendRecycleViewData, context:Context){
             friendName.text = friendRecycleViewData.name
-            friendFavorite.text = friendRecycleViewData.favorite
+            //friendFavorite.text = friendRecycleViewData.favorite
 
 
             if(friendRecycleViewData.favorite.equals("true")){
