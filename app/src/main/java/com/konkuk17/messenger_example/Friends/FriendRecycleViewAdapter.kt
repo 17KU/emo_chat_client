@@ -58,6 +58,11 @@ class FriendRecycleViewAdapter(
         return dataList.size
     }
 
+    //SearchFriendd에서 검색을 위해 사용
+    fun filter(name: String){
+        dataList.clear()
+
+    }
 
 
 }

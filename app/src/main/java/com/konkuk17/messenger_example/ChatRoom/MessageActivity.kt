@@ -400,6 +400,7 @@ class MessageActivity : AppCompatActivity() {
                 if(data.uid.equals(myUid)){
                     //메세지일때
                     if(data.m_type.equals("1")){
+                        linearLayout.visibility = View.GONE
                         emoImage.setImageResource(android.R.color.transparent)
                         itemLayout.gravity = Gravity.RIGHT
 
@@ -521,11 +522,12 @@ class MessageActivity : AppCompatActivity() {
                             }
                             )
                         }
-                        linearLayout.visibility = View.GONE
+
                     }
                     //이모티콘일때
                     else if(data.m_type.equals("2")){
                         itemLayout.gravity = Gravity.RIGHT
+                        linearLayout.visibility = View.GONE
 
                         msgViewBinding.messageViewFramelayout.visibility = View.GONE
                         msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
@@ -600,6 +602,7 @@ class MessageActivity : AppCompatActivity() {
                 else if(data.uid.equals(friendUid)){
                     //메세지일떄
                     if(data.m_type.equals("1")){
+                        linearLayout.visibility = View.VISIBLE
                         emoImage.setImageResource(android.R.color.transparent)
                         message.visibility = View.VISIBLE
 
@@ -618,18 +621,22 @@ class MessageActivity : AppCompatActivity() {
                         msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
 
 
-                        linearLayout.visibility = View.GONE
 
+
+                        emptyView.visibility = View.GONE
                     }
 
                     //이모티콘일때
                     else if(data.m_type.equals("2")){
+                        linearLayout.visibility = View.VISIBLE
                         emoImage.visibility = View.VISIBLE
                         msgViewBinding.messageViewFramelayout.visibility = View.GONE
                         msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
                         msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
                         message.visibility = View.GONE
                         emoBtn.visibility = View.GONE
+
+
 
                         itemLayout.gravity = Gravity.LEFT
                         emptyView.visibility = View.GONE

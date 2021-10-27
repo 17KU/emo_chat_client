@@ -3,6 +3,7 @@ package com.konkuk17.messenger_example.Friends
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.konkuk17.messenger_example.Main.IdViewModel
 import com.konkuk17.messenger_example.R
@@ -44,6 +45,7 @@ class SearchFriendActivity : AppCompatActivity() {
             searchRecycleView.layoutManager = linearLayoutManager
             searchRecycleView.setHasFixedSize(true)
 
+            /*
             searchBtn.setOnClickListener {
 
                 searchList.clear()
@@ -63,6 +65,11 @@ class SearchFriendActivity : AppCompatActivity() {
                 }
 
 
+
+            }
+            */
+
+            findFriendEtxt.addTextChangedListener{
 
             }
         }

@@ -155,7 +155,7 @@ class ChatFragment : Fragment() {
             var intentChatAdd = Intent(this@ChatFragment.requireContext(), ChatAddActivity::class.java)
             intentChatAdd.putExtra("friendList", friendList)
             intentChatAdd.putExtra("myUserId", user_id)
-            startActivity(intentChatAdd)
+            startActivityForResult(intentChatAdd,100)
         }
 
 
@@ -171,6 +171,16 @@ class ChatFragment : Fragment() {
             startActivity(intentChatSearch)
         }
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            100->{
+                dataInit()
+            }
+        }
 
     }
 }
