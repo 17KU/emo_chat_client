@@ -1,5 +1,6 @@
 package com.konkuk17.messenger_example.Chat
 
+import com.konkuk17.messenger_example.Signup.MyResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.POST
@@ -21,4 +22,13 @@ interface ChatService {
         @Field("user_id") user_id : String,
         @Field("friend_id") friend_id : String
     ): Call<Chatting>       //output을 정의하는 곳.
+
+
+    @FormUrlEncoded
+    @POST("/chatting/chat_list_delete/")
+    fun deleteChatList(
+        @Field("chat_index") chat_index : String,
+        @Field("user_id") user_id : String
+    ): Call<MyResponse>
+
 }

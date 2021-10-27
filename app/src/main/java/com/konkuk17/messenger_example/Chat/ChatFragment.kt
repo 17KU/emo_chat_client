@@ -1,5 +1,7 @@
 package com.konkuk17.messenger_example.Chat
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ChatFragment : Fragment() {
 
     val myIdViewModel: IdViewModel by activityViewModels<IdViewModel>()
+    lateinit var retrofit : Retrofit
+    lateinit var chatService : ChatService
 
     var items: ArrayList<Chatting> = arrayListOf<Chatting>()
     lateinit var binding : FragmentChatListBinding
@@ -55,6 +59,14 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //레트로핏 객체 만들기
+        retrofit = Retrofit.Builder()
+            .baseUrl("http://203.252.166.72:80")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        chatService = retrofit.create(ChatService::class.java)
+
         //item add
         chatAdapter = MyChatRecyclerViewAdapter(items)
         chatAdapter.chatListClickListener = object : MyChatRecyclerViewAdapter.ChatListClickListener{
@@ -71,7 +83,15 @@ class ChatFragment : Fragment() {
                 var dialog = AlertDialog.Builder(this@ChatFragment.requireContext())
                     .setTitle("채팅방 삭제")
                     .setMessage(item.chat_title+"님과의 채팅방을 삭제하시겠습니까?")
-                    //.setPositiveButton()
+                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                        var myId =  myIdViewModel.myId.value.toString()
+                        chatService.deleteChatList(item.chat_index!!, myId)
+                    })
+                    .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
+                        Log.d("chatting", "삭제취소")
+                    })
+
+                dialog.show()
             }
 
         }
@@ -93,12 +113,7 @@ class ChatFragment : Fragment() {
 
     fun dataInit() {
         //retrofit 객체 만들기
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://203.252.166.72:80")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        var chatService = retrofit.create(ChatService::class.java)
 
         var user_id : String = myIdViewModel.myId.value.toString()
         Log.d("userId", user_id)

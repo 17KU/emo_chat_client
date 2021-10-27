@@ -45,6 +45,10 @@ class ChatSearchActivity : AppCompatActivity() {
                 startActivity(msgIntent)
             }
 
+            override fun onChatListLongClick(position: Int, item: Chatting) {
+
+            }
+
         }
 
         binding.chatsearchRecyclerview.adapter = chatAdapter
