@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
@@ -17,20 +18,29 @@ class FriendRecycleViewAdapter(
     private var context: Context,
     private var dataList: ArrayList<FriendRecycleViewData>,
     private val itemClick: (FriendRecycleViewData) -> Unit
+    //private val deleteClick: (FriendRecycleViewData) -> Unit
 ) : RecyclerView.Adapter<FriendRecycleViewAdapter.ItemViewHolder>(){
 
     var allFriendList = ArrayList<FriendRecycleViewData>()
+    var favoriteList = ArrayList<FriendRecycleViewData>()
 
     init{
         allFriendList.addAll(dataList)
+        favoriteList.addAll(dataList)
     }
+
+    interface FriendListClickListener{
+        fun onFriendListLongClick(position: Int, item: FriendRecycleViewData)
+    }
+
+    var friendListClickListener : FriendListClickListener? =null
 
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val friendName = itemView.findViewById<TextView>(R.id.friend_name)
         private val friendImg = itemView.findViewById<ImageView>(R.id.friend_img)
         private val friendFavorite = itemView.findViewById<TextView>(R.id.favorite_state)
         private val favoriteChip = itemView.findViewById<Chip>(R.id.favorite_chip)
-
+        private val friendItemLayout = itemView.findViewById<LinearLayout>(R.id.friend_item_layout)
 
         fun bind(friendRecycleViewData: FriendRecycleViewData, context:Context){
             friendName.text = friendRecycleViewData.name
@@ -39,13 +49,19 @@ class FriendRecycleViewAdapter(
 
             if(friendRecycleViewData.favorite.equals("true")){
                 favoriteChip.setChecked(true)
+                //friendRecycleViewData.favorite = "true"
             }
             else{
                 favoriteChip.setChecked(false)
+                //friendRecycleViewData.favorite = "false"
             }
 
             favoriteChip.setOnClickListener{ itemClick(friendRecycleViewData) }
 
+            friendItemLayout.setOnLongClickListener {
+                friendListClickListener?.onFriendListLongClick(position, dataList[position])
+                true
+            }
         }
 
 
@@ -58,6 +74,9 @@ class FriendRecycleViewAdapter(
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(dataList[position], context)
+
+
+
     }
 
     override fun getItemCount(): Int {
@@ -69,17 +88,31 @@ class FriendRecycleViewAdapter(
         dataList.clear()
         if(name.length==0){
             dataList.addAll(allFriendList)
+
         }
         else{
-            for(chat in allFriendList){
-                if(chat.name!!.contains(name)){
-                    dataList.add(chat)
+            for(friend in allFriendList){
+                if(friend.name!!.contains(name)){
+                    dataList.add(friend)
                 }
             }
         }
 
         notifyDataSetChanged()
     }
+
+
+    fun filter_favorite(){
+        dataList.clear()
+
+        for(friend in favoriteList){
+            if(friend.favorite.equals("true")){
+                dataList.add(friend)
+            }
+        }
+        notifyDataSetChanged()
+    }
+
 
 
 }
