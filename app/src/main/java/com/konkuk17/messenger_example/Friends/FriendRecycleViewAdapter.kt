@@ -22,9 +22,11 @@ class FriendRecycleViewAdapter(
 ) : RecyclerView.Adapter<FriendRecycleViewAdapter.ItemViewHolder>(){
 
     var allFriendList = ArrayList<FriendRecycleViewData>()
+    var favoriteList = ArrayList<FriendRecycleViewData>()
 
     init{
         allFriendList.addAll(dataList)
+        favoriteList.addAll(dataList)
     }
 
     interface FriendListClickListener{
@@ -42,14 +44,16 @@ class FriendRecycleViewAdapter(
 
         fun bind(friendRecycleViewData: FriendRecycleViewData, context:Context){
             friendName.text = friendRecycleViewData.name
-            //friendFavorite.text = friendRecycleViewData.favorite
+            friendFavorite.text = friendRecycleViewData.favorite
 
 
             if(friendRecycleViewData.favorite.equals("true")){
                 favoriteChip.setChecked(true)
+                //friendRecycleViewData.favorite = "true"
             }
             else{
                 favoriteChip.setChecked(false)
+                //friendRecycleViewData.favorite = "false"
             }
 
             favoriteChip.setOnClickListener{ itemClick(friendRecycleViewData) }
@@ -84,17 +88,31 @@ class FriendRecycleViewAdapter(
         dataList.clear()
         if(name.length==0){
             dataList.addAll(allFriendList)
+
         }
         else{
-            for(chat in allFriendList){
-                if(chat.name!!.contains(name)){
-                    dataList.add(chat)
+            for(friend in allFriendList){
+                if(friend.name!!.contains(name)){
+                    dataList.add(friend)
                 }
             }
         }
 
         notifyDataSetChanged()
     }
+
+
+    fun filter_favorite(){
+        dataList.clear()
+
+        for(friend in favoriteList){
+            if(friend.favorite.equals("true")){
+                dataList.add(friend)
+            }
+        }
+        notifyDataSetChanged()
+    }
+
 
 
 }
