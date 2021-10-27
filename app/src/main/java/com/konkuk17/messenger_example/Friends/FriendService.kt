@@ -33,4 +33,14 @@ interface FriendService {
         @Field("user_id") user_id : String,
         @Field("delete_friend_id") delete_friend_id : String
     ): Call<DeleteFriendOutput>
+
+
+    @FormUrlEncoded
+    @POST("/friends/find_chat")
+    fun FindChat(
+        @Field("user_id") user_id : String,
+        @Field("friend_id") friend_id : String
+    ): Call<FindChatOutput>
+
+
 }

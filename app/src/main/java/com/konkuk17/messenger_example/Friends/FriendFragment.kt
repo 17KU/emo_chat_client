@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
+import com.konkuk17.messenger_example.ChatRoom.MessageActivity
 import com.konkuk17.messenger_example.Main.IdViewModel
 
 import com.konkuk17.messenger_example.databinding.FragmentFriendBinding
@@ -107,7 +108,7 @@ class FriendFragment : Fragment() {
 
 
 
-            favoriteAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), favoritelist){ friendRecycleViewData ->
+            favoriteAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), favoritelist, friendService, user_id){ friendRecycleViewData ->
 
                 var favorite_add = friendRecycleViewData.id
 
@@ -154,7 +155,7 @@ class FriendFragment : Fragment() {
             favoriteListUpdate(friendService,favoriteAdapter,favoritelist)
 
             //recycler view에서 쓸 어뎁터
-            friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist){ friendRecycleViewData ->
+            friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist, friendService, user_id){ friendRecycleViewData ->
 
                 var favorite_add = friendRecycleViewData.id
 
@@ -239,6 +240,7 @@ class FriendFragment : Fragment() {
                         })
                     dialog.show()
                 }
+
             }
 
             friendRecycleView.adapter = friendAdapter

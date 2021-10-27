@@ -52,7 +52,7 @@ class SearchFriendActivity : AppCompatActivity() {
         //검색하고 나서 저장할 목록(출력)
         //var searchList : ArrayList<FriendRecycleViewData>
 
-        var searchAdapter = FriendRecycleViewAdapter(this,friendList) { friendRecycleViewData ->
+        var searchAdapter = FriendRecycleViewAdapter(this,friendList,friendService,user_id) { friendRecycleViewData ->
 
             var favorite_add = friendRecycleViewData.id
 

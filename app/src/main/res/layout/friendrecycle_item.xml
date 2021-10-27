@@ -34,13 +34,20 @@
         <TextView
             android:id="@+id/favorite_state"
 
-            android:layout_width="50dp"
+            android:layout_width="10dp"
             android:layout_height="100dp"
 
             android:gravity="center_vertical"
             android:paddingStart="30dp"
             android:textColor="#555555"
             android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/item_chat_btn"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:text="chat"
+            />
 
         <com.google.android.material.chip.Chip
             style="@style/Widget.MaterialComponents.Chip.Choice"
