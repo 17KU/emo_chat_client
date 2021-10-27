@@ -31,9 +31,12 @@ class ChatSearchActivity : AppCompatActivity() {
 
     fun init(){
         userId = intent.getStringExtra("myUserId")
-        chattingList = intent.getSerializableExtra("chattingList") as ArrayList<Chatting>
+        var temp = intent.getSerializableExtra("chattingList")
 
-        if(chattingList == null){
+        if(temp != null){
+            chattingList = temp as ArrayList<Chatting>
+        }
+        else{
             chattingList = arrayListOf<Chatting>()
         }
 

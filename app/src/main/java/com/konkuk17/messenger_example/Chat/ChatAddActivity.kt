@@ -43,9 +43,12 @@ class ChatAddActivity : AppCompatActivity() {
 
     fun init() {
         userId = intent.getStringExtra("myUserId")
-        friendList = intent.getSerializableExtra("friendList") as ArrayList<FriendRecycleViewData>
+        var temp = intent.getSerializableExtra("friendList")
 
-        if(friendList == null){
+        if(temp != null){
+            friendList = temp as ArrayList<FriendRecycleViewData>
+        }
+        else{
             friendList = arrayListOf<FriendRecycleViewData>()
         }
 
