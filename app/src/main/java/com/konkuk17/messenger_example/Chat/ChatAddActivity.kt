@@ -85,9 +85,6 @@ class ChatAddActivity : AppCompatActivity() {
         }
 
         binding.chataddIvBack.setOnClickListener {
-            var mainIntent = Intent(this, MainActivity::class.java)
-            mainIntent.putExtra("selectedPage", "chattingPage")
-            startActivity(mainIntent)
             finish()
         }
 
