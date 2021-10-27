@@ -33,6 +33,10 @@ class ChatSearchActivity : AppCompatActivity() {
         userId = intent.getStringExtra("myUserId")
         chattingList = intent.getSerializableExtra("chattingList") as ArrayList<Chatting>
 
+        if(chattingList == null){
+            chattingList = arrayListOf<Chatting>()
+        }
+
         //item add
         chatAdapter = MyChatRecyclerViewAdapter(chattingList!!)
         chatAdapter.chatListClickListener = object : MyChatRecyclerViewAdapter.ChatListClickListener{

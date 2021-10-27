@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,7 @@ import com.konkuk17.messenger_example.Login.Login
 import com.konkuk17.messenger_example.Main.IdViewModel
 import com.konkuk17.messenger_example.Main.MainActivity
 import com.konkuk17.messenger_example.R
+import com.konkuk17.messenger_example.Signup.MyResponse
 import com.konkuk17.messenger_example.databinding.FragmentChatBinding
 import com.konkuk17.messenger_example.databinding.FragmentChatListBinding
 import com.konkuk17.messenger_example.databinding.FragmentFriendBinding
@@ -86,6 +88,37 @@ class ChatFragment : Fragment() {
                     .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                         var myId =  myIdViewModel.myId.value.toString()
                         chatService.deleteChatList(item.chat_index!!, myId)
+                            .enqueue(object : Callback<MyResponse>{
+                                override fun onResponse(
+                                    call: Call<MyResponse>,
+                                    response: Response<MyResponse>
+                                ) {
+                                    var result = response.body()
+                                    if (result?.code == "0000"){
+                                        Toast.makeText(this@ChatFragment.requireContext(), "채팅방을 삭제했습니다.", Toast.LENGTH_SHORT).show()
+                                        Log.d("채팅 리스트 삭제", "삭제 성공")
+                                        dataInit()
+
+                                    }
+                                    else if (result?.code == "0001"){
+                                        Toast.makeText(this@ChatFragment.requireContext(), "채팅방을 삭제할 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+                                        Log.d("채팅 리스트 삭제", "삭제 실패 - 권환 없음")
+                                    }
+                                    else{
+                                        Toast.makeText(this@ChatFragment.requireContext(), "서버와의 문제로 채팅방 삭제에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                                        Log.d("채팅 리스트 삭제", "삭제 실패 - 서버 문제")
+                                    }
+
+                                }
+
+                                override fun onFailure(call: Call<MyResponse>, t: Throwable) {
+                                    Log.d("debug", t.message.toString())
+                                    Log.d("채팅 리스트 삭제", "삭제 실패 - 서버와 통신 실패")
+                                    Toast.makeText(this@ChatFragment.requireContext(), "채팅방 삭제에 실패했습니다. (서버 통신 문제)", Toast.LENGTH_SHORT).show()
+                                }
+
+
+                            })
                     })
                     .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, which ->
                         Log.d("chatting", "삭제취소")

@@ -45,6 +45,9 @@ class ChatAddActivity : AppCompatActivity() {
         userId = intent.getStringExtra("myUserId")
         friendList = intent.getSerializableExtra("friendList") as ArrayList<FriendRecycleViewData>
 
+        if(friendList == null){
+            friendList = arrayListOf<FriendRecycleViewData>()
+        }
 
         //리사이클러뷰 init
         var myAdapter = FriendRVAdapter(friendList!!)
