@@ -2,6 +2,9 @@ package com.konkuk17.messenger_example.ChatRoom
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.renderscript.ScriptGroup
@@ -16,6 +19,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.database.collection.LLRBNode
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityMessageBinding
 import retrofit2.Call
@@ -90,72 +94,131 @@ class MessageActivity : AppCompatActivity() {
         }
 
 
+        var emoImgBind1 = binding.emoImg1
+        var emoImgBind2 = binding.emoImg2
+        var emoImgBind3 = binding.emoImg3
+        var emoImgBind4 = binding.emoImg4
+        var emoImgBind5 = binding.emoImg5
+        var emoImgBind6 = binding.emoImg6
+
+        var isSelected : Boolean = false
+
+
         binding.emoImg1.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
                 emo_message = "01"
+
             }
             else if(binding.messageViewEmotion.text.equals("화남")){
                 emo_message = "11"
+
             }
             else if(binding.messageViewEmotion.text.equals("불안함")){
                 emo_message = "21"
+
             }
             else if(binding.messageViewEmotion.text.equals("슬픔")){
                 emo_message = "31"
+
             }
             else if(binding.messageViewEmotion.text.equals("중립")){
                 emo_message = "41"
+
             }
             else if(binding.messageViewEmotion.text.equals("행복함")){
                 emo_message = "51"
+
             }
+            if(isSelected){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+            }
+            binding.emoImg1.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+            isSelected = true
         }
 
         binding.emoImg2.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
                 emo_message = "02"
+
             }
             else if(binding.messageViewEmotion.text.equals("화남")){
                 emo_message = "12"
+
             }
             else if(binding.messageViewEmotion.text.equals("불안함")){
                 emo_message = "22"
+
             }
             else if(binding.messageViewEmotion.text.equals("슬픔")){
                 emo_message = "32"
+
             }
             else if(binding.messageViewEmotion.text.equals("중립")){
                 emo_message = "42"
+
             }
             else if(binding.messageViewEmotion.text.equals("행복함")){
                 emo_message = "52"
+
             }
+            if(isSelected){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+            }
+            binding.emoImg2.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+            isSelected = true
         }
 
         binding.emoImg3.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
                 emo_message = "03"
+
             }
             else if(binding.messageViewEmotion.text.equals("화남")){
                 emo_message = "13"
+
             }
             else if(binding.messageViewEmotion.text.equals("불안함")){
                 emo_message = "23"
+
             }
             else if(binding.messageViewEmotion.text.equals("슬픔")){
                 emo_message = "33"
+
             }
             else if(binding.messageViewEmotion.text.equals("중립")){
                 emo_message = "43"
+
             }
             else if(binding.messageViewEmotion.text.equals("행복함")){
                 emo_message = "53"
+
             }
+            if(isSelected){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+            }
+            binding.emoImg3.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+            isSelected = true
         }
 
         binding.emoImg4.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
                 emo_message = "04"
+
             }
             else if(binding.messageViewEmotion.text.equals("화남")){
                 emo_message = "14"
@@ -172,6 +235,16 @@ class MessageActivity : AppCompatActivity() {
             else if(binding.messageViewEmotion.text.equals("행복함")){
                 emo_message = "54"
             }
+            if(isSelected){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+            }
+            binding.emoImg4.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+            isSelected = true
         }
         binding.emoImg5.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
@@ -192,6 +265,16 @@ class MessageActivity : AppCompatActivity() {
             else if(binding.messageViewEmotion.text.equals("행복함")){
                 emo_message = "55"
             }
+            if(isSelected){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+            }
+            binding.emoImg5.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+            isSelected = true
         }
         binding.emoImg6.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
@@ -212,6 +295,16 @@ class MessageActivity : AppCompatActivity() {
             else if(binding.messageViewEmotion.text.equals("행복함")){
                 emo_message = "56"
             }
+            if(isSelected){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+            }
+            binding.emoImg6.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY)
+            isSelected = true
         }
 
 
@@ -223,7 +316,13 @@ class MessageActivity : AppCompatActivity() {
                     var comment : ChatModel.Comment = ChatModel().Comment(myUid, emo_message,"2")
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener {task->
                         if(task.isSuccessful){
-
+                            emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                            emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                            emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                            emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                            emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                            emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                            isSelected = false
                             binding.messageViewFramelayout.visibility = View.GONE
                         }
                     }
@@ -650,6 +749,7 @@ class MessageActivity : AppCompatActivity() {
 
 
                         var num : Int = data.message.toString().toInt()
+
 
                         when(num/10){
                             0-> when(num%10){
