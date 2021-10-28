@@ -17,16 +17,15 @@
             android:id="@+id/friend_img"
             android:layout_width="80dp"
             android:layout_height="80dp"
-"
             android:scaleType="centerCrop"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             />
 
 
         <TextView
             android:id="@+id/friend_name"
 
-            android:layout_width="160dp"
+            android:layout_width="150dp"
             android:layout_height="80dp"
 
 
@@ -46,24 +45,16 @@
             android:layout_height="50dp"
 
 
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/favorite_chip"
             style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:layout_width="0dp"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-
-
-            android:background="@android:color/transparent"
-            android:foreground="@android:color/transparent"
-            app:checkedIcon="@drawable/yellow_star"
-            app:checkedIconVisible="false"
-            app:chipIcon="@drawable/gray_star"
-            app:chipIconVisible="false" />
+            android:layout_margin="5dp"
+            />
 
 
     </LinearLayout>

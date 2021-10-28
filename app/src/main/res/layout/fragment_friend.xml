@@ -30,7 +30,8 @@
 
         <Button
             android:background="@android:color/transparent"
-            android:drawableTop="@drawable/search_xml"
+            android:drawableTop="@android:drawable/ic_search_category_default"
+            android:drawableTint="@android:color/holo_purple"
 
             android:id="@+id/find_friend_btn"
             android:layout_width="60dp"
@@ -43,7 +44,9 @@
             android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:layout_gravity="right"
-            android:drawableTop="@drawable/ic_baseline_add_circle_24" />
+            android:drawableTop="@drawable/ic_add_circle"
+            android:drawableTint="@android:color/holo_purple"
+            />
 
     </LinearLayout>
 

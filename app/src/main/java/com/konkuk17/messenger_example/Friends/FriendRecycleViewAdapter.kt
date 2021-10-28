@@ -60,7 +60,7 @@ class FriendRecycleViewAdapter(
         fun bind(friendRecycleViewData: FriendRecycleViewData, context:Context){
             friendName.text = friendRecycleViewData.name
             //friendFavorite.text = friendRecycleViewData.favorite
-
+            friendImg.setImageResource(R.drawable.purple)
 
 
             if(friendRecycleViewData.favorite.equals("true")){
