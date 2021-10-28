@@ -129,6 +129,9 @@ class SearchFriendActivity : AppCompatActivity() {
             }
         }
         */
+        binding.searchFriendBack.setOnClickListener {
+            finish()
+        }
 
     }
 }

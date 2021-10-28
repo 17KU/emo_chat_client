@@ -55,6 +55,10 @@ class AddFriendActivity : AppCompatActivity() {
         binding.apply{
 
 
+            addFriendBack.setOnClickListener{
+                finish()
+            }
+
             addBtn.setOnClickListener {
                 var add_friend_id = addFriendEtxt.text.toString()
 
