@@ -99,7 +99,7 @@
             android:textStyle="bold"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#d499d4"
+            android:backgroundTint="#e2cce7"
             android:fontFamily="@font/hangulnuri"
             android:text="취소"/>
 
