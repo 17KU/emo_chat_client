@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Friends.FriendFragment"
     android:id="@+id/fragment_friend"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/friend_toplinearview"
@@ -17,34 +22,42 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
             android:text="친구"
             android:textSize="35sp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="180dp"
-            android:fontFamily="@font/hangulnuri"
+            android:textStyle="bold"
+            android:fontFamily="@font/hangeulnurib"
             />
 
 
 
-        <Button
+        <ImageView
             android:background="@android:color/transparent"
-            android:drawableTop="@android:drawable/ic_search_category_default"
             android:drawableTint="@android:color/holo_purple"
 
+            android:src="@drawable/ic_baseline_search_24"
+            android:scaleType="fitXY"
             android:id="@+id/find_friend_btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
              />
-        <Button
+        <ImageView
             android:id="@+id/add_friend_btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:layout_gravity="right"
-            android:drawableTop="@drawable/ic_add_circle"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_baseline_add_circle_24"
+            android:scaleType="fitXY"
             android:drawableTint="@android:color/holo_purple"
             />
 
@@ -53,7 +66,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,6 +91,7 @@
                         android:text="즐겨찾기"
                         android:textSize="25sp"
                         android:fontFamily="@font/hangulnuri"
+                        android:textStyle="bold"
                         android:layout_marginBottom="10dp"
                         />
                     <androidx.recyclerview.widget.RecyclerView
@@ -102,6 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="친구 목록"
+                        android:textStyle="bold"
                         android:textSize="25sp"
                         android:fontFamily="@font/hangulnuri"
                         android:layout_marginBottom="10dp"
@@ -118,6 +132,6 @@
 
         </LinearLayout>
     </ScrollView>
-
+    </LinearLayout>
 
 </FrameLayout>

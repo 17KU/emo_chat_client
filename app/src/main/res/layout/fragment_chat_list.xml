@@ -11,8 +11,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="0dp"
@@ -21,7 +22,8 @@
             android:layout_weight="5"
             android:gravity="center_vertical"
             android:text="채팅"
-            android:textSize="24sp"
+            android:fontFamily="@font/hangeulnurib"
+            android:textSize="35sp"
             android:textStyle="bold" />
         <ImageView
             android:id="@+id/chatlist_iv_searchChat"
@@ -30,6 +32,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_baseline_search_24"/>
         <ImageView
             android:id="@+id/chatlist_iv_addChat"
@@ -38,6 +41,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_baseline_add_circle_24"/>
 
     </LinearLayout>

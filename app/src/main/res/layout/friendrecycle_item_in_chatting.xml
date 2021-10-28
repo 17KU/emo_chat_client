@@ -3,27 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:layout_margin="5dp"
     android:id="@+id/friend_in_chat_layout">
 
     <ImageView
+        android:padding="8dp"
         android:id="@+id/friend_img_inChatting"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_baseline_person_pin_24" />
+        android:layout_margin="5dp"
+        android:src="@drawable/red"
+        android:layout_gravity="center"/>
 
 
     <TextView
         android:id="@+id/friend_name_inChatting"
-
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-
+        android:layout_height="match_parent"
+        android:text="친구이름"
+        android:fontFamily="@font/hangulnuri"
         android:gravity="center_vertical"
-        android:paddingStart="30dp"
-        android:textColor="#555555"
-        android:textSize="15sp" />
+        android:textSize="20sp" />
 
 
 </LinearLayout>

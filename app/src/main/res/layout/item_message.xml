@@ -5,23 +5,29 @@
     android:orientation="horizontal"
     android:id="@+id/messageItem_mainlayout"
     android:gravity="left"
+    android:layout_margin="5dp"
     >
 
     <LinearLayout
 
         android:id="@+id/messageItem_linear"
         android:orientation="vertical"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:src="@drawable/green"
             android:id="@+id/messageItem_profile_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
             />
 
         <TextView
+            android:text="아이디"
+            android:gravity="center"
             android:id="@+id/messageItem_name"
             android:layout_width="50dp"
             android:layout_height="20dp"
@@ -36,11 +42,13 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/messageItem_emo_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:src="@drawable/blue_search"
+        android:scaleType="fitXY"
         />
 
     <TextView

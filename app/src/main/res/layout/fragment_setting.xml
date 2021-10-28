@@ -19,7 +19,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_person_pin_24" />
+            android:src="@drawable/yellow_star" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,6 +42,7 @@
                     android:text="ID"
                     android:textColor="@color/black"
                     android:textSize="20sp"
+                    android:fontFamily="@font/hangeulnurib"
                     android:textStyle="bold" />
 
                 <TextView
@@ -51,6 +52,7 @@
                     android:layout_weight="4"
                     android:padding="10dp"
                     android:text="아이디"
+                    android:fontFamily="@font/hangulnuri"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -72,6 +74,7 @@
                     android:layout_weight="2"
                     android:padding="10dp"
                     android:text="NAME"
+                    android:fontFamily="@font/hangeulnurib"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -94,6 +97,7 @@
                     android:layout_weight="4"
                     android:padding="10dp"
                     android:text="이름"
+                    android:fontFamily="@font/hangulnuri"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -118,7 +122,8 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:layout_toRightOf="@+id/account_iv_profile"
-            android:backgroundTint="#009688"
+            android:backgroundTint="#4CB8AE"
+            android:fontFamily="@font/hangeulnurib"
             android:padding="10dp"
             android:text="이름 변경"
             android:textSize="18sp"
@@ -132,7 +137,8 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:layout_toRightOf="@+id/account_iv_profile"
-            android:backgroundTint="#009688"
+            android:backgroundTint="#4CB8AE"
+            android:fontFamily="@font/hangeulnurib"
             android:padding="10dp"
             android:text="비번 변경"
             android:textSize="18sp"
@@ -153,6 +159,7 @@
         android:backgroundTint="#009688"
         android:padding="10dp"
         android:text="로그아웃"
+        android:fontFamily="@font/hangeulnurib"
         android:textSize="18sp"
         android:textStyle="bold" />
 </LinearLayout>
