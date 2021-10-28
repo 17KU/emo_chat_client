@@ -36,6 +36,7 @@
         android:text="전송"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:backgroundTint="#d499d4"
 
         />
 
@@ -129,6 +130,7 @@
                     android:id="@+id/messageView_sendEmo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#d499d4"
                     android:layout_marginLeft="50dp"/>
             </LinearLayout>
 

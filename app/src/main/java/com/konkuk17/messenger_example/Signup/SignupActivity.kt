@@ -144,6 +144,10 @@ class SignupActivity : AppCompatActivity() {
             btnSignupCancle.setOnClickListener {
                 finish()
             }
+
+            signupBack.setOnClickListener {
+                finish()
+            }
         }
 
     }

@@ -19,6 +19,7 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            app:tint="@android:color/holo_purple"
             android:src="@drawable/ic_baseline_keyboard_backspace_24"/>
 
         <TextView
@@ -29,7 +30,8 @@
             android:gravity="center_vertical"
             android:text="대화상대 초대"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/hangulnuri"/>
 
     </LinearLayout>
 
@@ -45,6 +47,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
+            android:fontFamily="@font/hangulnuri"
             android:hint="친구 이름을 검색하세요."/>
 
 
