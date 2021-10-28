@@ -7,84 +7,114 @@
     android:id="@+id/fragment_friend"
     >
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/friend_toplinearview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
 
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="친구"
+            android:textSize="35sp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="180dp"
+            android:fontFamily="@font/hangulnuri"
+            />
+
+
+
+        <Button
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/search_xml"
+
+            android:id="@+id/find_friend_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="right"
+             />
+        <Button
+            android:id="@+id/add_friend_btn"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right"
+            android:drawableTop="@drawable/ic_baseline_add_circle_24" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        >
         <LinearLayout
-            android:id="@+id/friend_toplinearview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="left"
-
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="친구"
-                android:textSize="35sp"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="40dp"
-                />
-
-            <Button
-                android:id="@+id/add_friend_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="add" />
-            <Button
-                android:id="@+id/find_friend_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="search" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/favorite_linearview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/friend_toplinearview"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="즐겨찾기"
-                android:textSize="30dp"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/favorite_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_below="@+id/favorite_linearview"
-            android:id="@+id/friend_linearview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:orientation="vertical">
-
-            <TextView
+            >
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="친구 목록"
-                android:textSize="30sp"
-                />
+                android:layout_height="match_parent"
+                >
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/friend_recycleView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                <LinearLayout
+                    android:id="@+id/favorite_linearview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="즐겨찾기"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/hangulnuri"
+                        android:layout_marginBottom="10dp"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/favorite_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_below="@+id/favorite_linearview"
+                    android:id="@+id/friend_linearview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="친구 목록"
+                        android:textSize="25sp"
+                        android:fontFamily="@font/hangulnuri"
+                        android:layout_marginBottom="10dp"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/friend_recycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-
-    </RelativeLayout>
 
 </FrameLayout>

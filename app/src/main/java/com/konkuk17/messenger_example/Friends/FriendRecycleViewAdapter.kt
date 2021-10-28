@@ -52,7 +52,7 @@ class FriendRecycleViewAdapter(
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val friendName = itemView.findViewById<TextView>(R.id.friend_name)
         private val friendImg = itemView.findViewById<ImageView>(R.id.friend_img)
-        private val friendFavorite = itemView.findViewById<TextView>(R.id.favorite_state)
+        //private val friendFavorite = itemView.findViewById<TextView>(R.id.favorite_state)
         private val favoriteChip = itemView.findViewById<Chip>(R.id.favorite_chip)
         private val friendItemLayout = itemView.findViewById<LinearLayout>(R.id.friend_item_layout)
         private val chatBtn = itemView.findViewById<Button>(R.id.item_chat_btn)
@@ -62,7 +62,9 @@ class FriendRecycleViewAdapter(
             //friendFavorite.text = friendRecycleViewData.favorite
 
 
+
             if(friendRecycleViewData.favorite.equals("true")){
+
                 favoriteChip.setChecked(true)
                 //friendRecycleViewData.favorite = "true"
             }
