@@ -387,7 +387,7 @@ class MessageActivity : AppCompatActivity() {
 
             private val itemLayout = itemView.findViewById<LinearLayout>(R.id.messageItem_mainlayout)
 
-            private val emoBtn = itemView.findViewById<ImageButton>(R.id.messageItem_emo_btn)
+            private val emoBtn = itemView.findViewById<Button>(R.id.messageItem_emo_btn)
 
             private val emptyView = itemView.findViewById<View>(R.id.empty_view)
 

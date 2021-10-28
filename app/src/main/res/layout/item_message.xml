@@ -42,7 +42,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <ImageButton
+    <Button
         android:id="@+id/messageItem_emo_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
