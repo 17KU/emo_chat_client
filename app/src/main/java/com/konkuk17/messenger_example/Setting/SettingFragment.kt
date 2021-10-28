@@ -1,7 +1,9 @@
 package com.konkuk17.messenger_example.Setting
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,6 +38,9 @@ class SettingFragment : Fragment() {
     lateinit var retrofit: Retrofit
     lateinit var settingService: SettingService
 
+    var pref: SharedPreferences? = null
+    var editor: SharedPreferences.Editor? = null
+
     val myIdViewModel: IdViewModel by activityViewModels<IdViewModel>()
 
     override fun onCreateView(
@@ -49,6 +54,10 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        pref = activity?.getSharedPreferences("autologin", Activity.MODE_PRIVATE)
+        editor = pref?.edit()
+
         init()
     }
 
@@ -71,6 +80,10 @@ class SettingFragment : Fragment() {
 
         //로그아웃
         binding.settingBtnLogout.setOnClickListener {
+
+            editor?.clear()
+            editor?.commit()
+
             activity?.finish()
             startActivity(Intent(activity, LoginActivity::class.java))
         }
@@ -95,6 +108,10 @@ class SettingFragment : Fragment() {
                             var result = response.body()
                             if (result?.code == "0000") {
                                 myIdViewModel.setMyNmae(user_name)
+
+                                editor?.putString("loginName", user_name)
+                                editor?.commit()
+
                                 Toast.makeText(this@SettingFragment.context, "이름을 변경했습니다.", Toast.LENGTH_SHORT).show()
                                 binding.settingName.text = myIdViewModel.myName.value
                             } else if (result?.code == "0001") {
