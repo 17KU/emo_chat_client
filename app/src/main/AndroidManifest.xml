@@ -23,14 +23,16 @@
         <activity android:name=".Chat.ChatSearchActivity" />
         <activity android:name=".Chat.ChatAddActivity" />
         <activity android:name=".Login.LoginActivity">
+
+        </activity>
+        <activity android:name=".Signup.SignupActivity" />
+        <activity android:name=".LoadingActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Signup.SignupActivity" />
-        <activity android:name=".LoadingActivity" />
         <activity android:name=".Main.MainActivity" />
     </application>
 
