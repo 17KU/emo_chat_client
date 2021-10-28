@@ -50,6 +50,7 @@
         android:layout_gravity="center"
         android:src="@drawable/blue_search"
         android:scaleType="fitXY"
+        android:backgroundTint="@android:color/transparent"
         />
 
     <TextView
