@@ -331,6 +331,24 @@ class MessageActivity : AppCompatActivity() {
         }
 
 
+        binding.messageRecyclerview.setOnClickListener {
+
+
+
+
+            if(binding.messageViewFramelayout.isActivated){
+                emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind4.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind5.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                emoImgBind6.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
+                isSelected = false
+                binding.messageViewFramelayout.visibility = View.GONE
+            }
+        }
+
+
     }
 
 
