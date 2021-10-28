@@ -84,6 +84,11 @@ class MessageActivity : AppCompatActivity() {
 
         }
 
+        binding.messageTitleTxt.text = friendName
+        binding.messageActivityBack.setOnClickListener {
+            finish()
+        }
+
 
         binding.emoImg1.setOnClickListener {
             if(binding.messageViewEmotion.text.equals("놀라움")){
@@ -606,7 +611,7 @@ class MessageActivity : AppCompatActivity() {
                         emoImage.setImageResource(android.R.color.transparent)
                         message.visibility = View.VISIBLE
 
-                        pImage.setImageResource(R.drawable.ic_baseline_person_24)
+                        pImage.setImageResource(R.drawable.emo_01)
                         name.text = friendName
                         message.text = data.message
                         message.setBackgroundResource(R.drawable.right_bubble)
@@ -636,7 +641,9 @@ class MessageActivity : AppCompatActivity() {
                         message.visibility = View.GONE
                         emoBtn.visibility = View.GONE
 
-
+                        linearLayout.visibility = View.VISIBLE
+                        pImage.setImageResource(R.drawable.emo_01)
+                        name.text = friendName
 
                         itemLayout.gravity = Gravity.LEFT
                         emptyView.visibility = View.GONE
