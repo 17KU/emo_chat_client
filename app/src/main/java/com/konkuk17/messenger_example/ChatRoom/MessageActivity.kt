@@ -449,67 +449,67 @@ class MessageActivity : AppCompatActivity() {
                                         Log.d("fire","놀람")
                                         emo_txt.text = "놀라움"
 
-                                        emo_img1.setImageResource(R.drawable.money)
-                                        emo_img2.setImageResource(R.drawable.money)
-                                        emo_img3.setImageResource(R.drawable.money)
-                                        emo_img4.setImageResource(R.drawable.money)
-                                        emo_img5.setImageResource(R.drawable.money)
-                                        emo_img6.setImageResource(R.drawable.money)
+                                        emo_img1.setImageResource(R.drawable.emo_01)
+                                        emo_img2.setImageResource(R.drawable.emo_02)
+                                        emo_img3.setImageResource(R.drawable.emo_03)
+                                        emo_img4.setImageResource(R.drawable.emo_04)
+                                        emo_img5.setImageResource(R.drawable.emo_05)
+                                        emo_img6.setImageResource(R.drawable.emo_06)
                                     }
                                     else if(emotion?.emotion.toString().equals("1")){
                                         Log.d("fire","분노")
                                         emo_txt.text = "화남"
 
-                                        emo_img1.setImageResource(R.drawable.book)
-                                        emo_img2.setImageResource(R.drawable.book)
-                                        emo_img3.setImageResource(R.drawable.book)
-                                        emo_img4.setImageResource(R.drawable.book)
-                                        emo_img5.setImageResource(R.drawable.book)
-                                        emo_img6.setImageResource(R.drawable.book)
+                                        emo_img1.setImageResource(R.drawable.emo_11)
+                                        emo_img2.setImageResource(R.drawable.emo_12)
+                                        emo_img3.setImageResource(R.drawable.emo_13)
+                                        emo_img4.setImageResource(R.drawable.emo_14)
+                                        emo_img5.setImageResource(R.drawable.emo_15)
+                                        emo_img6.setImageResource(R.drawable.emo_16)
                                     }
                                     else if(emotion?.emotion.toString().equals("2")){
                                         Log.d("fire","불안")
                                         emo_txt.text = "불안함"
 
-                                        emo_img1.setImageResource(R.drawable.money)
-                                        emo_img2.setImageResource(R.drawable.money)
-                                        emo_img3.setImageResource(R.drawable.money)
-                                        emo_img4.setImageResource(R.drawable.money)
-                                        emo_img5.setImageResource(R.drawable.money)
-                                        emo_img6.setImageResource(R.drawable.money)
+                                        emo_img1.setImageResource(R.drawable.emo_21)
+                                        emo_img2.setImageResource(R.drawable.emo_22)
+                                        emo_img3.setImageResource(R.drawable.emo_23)
+                                        emo_img4.setImageResource(R.drawable.emo_24)
+                                        emo_img5.setImageResource(R.drawable.emo_25)
+                                        emo_img6.setImageResource(R.drawable.emo_26)
                                     }
                                     else if(emotion?.emotion.toString().equals("3")){
                                         Log.d("fire","슬픔")
                                         emo_txt.text = "슬픔"
 
-                                        emo_img1.setImageResource(R.drawable.money)
-                                        emo_img2.setImageResource(R.drawable.money)
-                                        emo_img3.setImageResource(R.drawable.money)
-                                        emo_img4.setImageResource(R.drawable.money)
-                                        emo_img5.setImageResource(R.drawable.money)
-                                        emo_img6.setImageResource(R.drawable.money)
+                                        emo_img1.setImageResource(R.drawable.emo_31)
+                                        emo_img2.setImageResource(R.drawable.emo_32)
+                                        emo_img3.setImageResource(R.drawable.emo_33)
+                                        emo_img4.setImageResource(R.drawable.emo_34)
+                                        emo_img5.setImageResource(R.drawable.emo_35)
+                                        emo_img6.setImageResource(R.drawable.emo_36)
                                     }
                                     else if(emotion?.emotion.toString().equals("4")){
                                         Log.d("fire","중립")
                                         emo_txt.text = "중립"
 
-                                        emo_img1.setImageResource(R.drawable.money)
-                                        emo_img2.setImageResource(R.drawable.money)
-                                        emo_img3.setImageResource(R.drawable.money)
-                                        emo_img4.setImageResource(R.drawable.money)
-                                        emo_img5.setImageResource(R.drawable.money)
-                                        emo_img6.setImageResource(R.drawable.money)
+                                        emo_img1.setImageResource(R.drawable.emo_41)
+                                        emo_img2.setImageResource(R.drawable.emo_42)
+                                        emo_img3.setImageResource(R.drawable.emo_43)
+                                        emo_img4.setImageResource(R.drawable.emo_44)
+                                        emo_img5.setImageResource(R.drawable.emo_45)
+                                        emo_img6.setImageResource(R.drawable.emo_46)
 
                                     }else if(emotion?.emotion.toString().equals("5")){
                                         Log.d("fire","행복")
                                         emo_txt.text = "행복함"
 
-                                        emo_img1.setImageResource(R.drawable.money)
-                                        emo_img2.setImageResource(R.drawable.money)
-                                        emo_img3.setImageResource(R.drawable.money)
-                                        emo_img4.setImageResource(R.drawable.money)
-                                        emo_img5.setImageResource(R.drawable.money)
-                                        emo_img6.setImageResource(R.drawable.money)
+                                        emo_img1.setImageResource(R.drawable.emo_51)
+                                        emo_img2.setImageResource(R.drawable.emo_52)
+                                        emo_img3.setImageResource(R.drawable.emo_53)
+                                        emo_img4.setImageResource(R.drawable.emo_54)
+                                        emo_img5.setImageResource(R.drawable.emo_55)
+                                        emo_img6.setImageResource(R.drawable.emo_56)
                                     }
 
 
@@ -545,52 +545,52 @@ class MessageActivity : AppCompatActivity() {
 
                         when(num/10){
                             0-> when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_01)
+                                2 -> emoImage.setImageResource(R.drawable.emo_02)
+                                3 -> emoImage.setImageResource(R.drawable.emo_03)
+                                4->emoImage.setImageResource(R.drawable.emo_04)
+                                5->emoImage.setImageResource(R.drawable.emo_05)
+                                6->emoImage.setImageResource(R.drawable.emo_06)
                             }
                             1->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.book)
-                                2 -> emoImage.setImageResource(R.drawable.book)
-                                3 -> emoImage.setImageResource(R.drawable.book)
-                                4->emoImage.setImageResource(R.drawable.book)
-                                5->emoImage.setImageResource(R.drawable.book)
-                                6->emoImage.setImageResource(R.drawable.book)
+                                1 -> emoImage.setImageResource(R.drawable.emo_11)
+                                2 -> emoImage.setImageResource(R.drawable.emo_12)
+                                3 -> emoImage.setImageResource(R.drawable.emo_13)
+                                4->emoImage.setImageResource(R.drawable.emo_14)
+                                5->emoImage.setImageResource(R.drawable.emo_15)
+                                6->emoImage.setImageResource(R.drawable.emo_16)
                             }
                             2->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_21)
+                                2 -> emoImage.setImageResource(R.drawable.emo_22)
+                                3 -> emoImage.setImageResource(R.drawable.emo_23)
+                                4->emoImage.setImageResource(R.drawable.emo_24)
+                                5->emoImage.setImageResource(R.drawable.emo_25)
+                                6->emoImage.setImageResource(R.drawable.emo_26)
                             }
                             3->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_31)
+                                2 -> emoImage.setImageResource(R.drawable.emo_32)
+                                3 -> emoImage.setImageResource(R.drawable.emo_33)
+                                4->emoImage.setImageResource(R.drawable.emo_34)
+                                5->emoImage.setImageResource(R.drawable.emo_35)
+                                6->emoImage.setImageResource(R.drawable.emo_36)
                             }
                             4->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_41)
+                                2 -> emoImage.setImageResource(R.drawable.emo_42)
+                                3 -> emoImage.setImageResource(R.drawable.emo_43)
+                                4->emoImage.setImageResource(R.drawable.emo_44)
+                                5->emoImage.setImageResource(R.drawable.emo_45)
+                                6->emoImage.setImageResource(R.drawable.emo_46)
                             }
                             5->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_51)
+                                2 -> emoImage.setImageResource(R.drawable.emo_52)
+                                3 -> emoImage.setImageResource(R.drawable.emo_53)
+                                4->emoImage.setImageResource(R.drawable.emo_54)
+                                5->emoImage.setImageResource(R.drawable.emo_55)
+                                6->emoImage.setImageResource(R.drawable.emo_56)
                             }
 
                         }
