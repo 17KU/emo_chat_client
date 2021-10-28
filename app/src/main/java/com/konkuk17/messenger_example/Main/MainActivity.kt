@@ -11,9 +11,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     var textarr = arrayListOf<String>("친구", "채팅", "설정")
     var iconarr = arrayListOf<Int>(
-        R.drawable.ic_baseline_people_24,
-        R.drawable.ic_baseline_chat_24,
-        R.drawable.ic_baseline_settings_24
+        R.drawable.emo_04,
+        R.drawable.emo_03,
+        R.drawable.emo_02
     )
 
     val idViewModel : IdViewModel by viewModels<IdViewModel>()
