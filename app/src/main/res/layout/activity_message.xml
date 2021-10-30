@@ -36,20 +36,142 @@
 
     </LinearLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/message_recyclerview"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:id="@+id/message_scrollview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/msgacti_btn_submit"
-
         android:layout_below="@+id/message_title_layout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message_title_layout" />
+        android:layout_above="@id/msgacti_et_msg"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/message_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+
+                    />
+
+
+
+                <FrameLayout
+                    android:id="@+id/messageView_Framelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/message_recyclerview"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        >
+
+
+
+                        <TableRow android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/emo_img4"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="20dp" />
+
+                            <ImageView
+                                android:id="@+id/emo_img5"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="20dp" />
+
+                            <ImageView
+                                android:id="@+id/emo_img6"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="20dp" />
+                        </TableRow>
+
+                        <TableRow android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/emo_img1"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="20dp" />
+
+                            <ImageView
+                                android:id="@+id/emo_img2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="20dp" />
+
+                            <ImageView
+                                android:id="@+id/emo_img3"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="20dp" />
+                        </TableRow>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="50dp"
+                                android:text="태그"
+                                android:textSize="35sp" />
+
+                            <TextView
+                                android:id="@+id/messageView_emotion"
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="50dp"
+                                android:textSize="35sp" />
+
+
+                            <Button
+                                android:id="@+id/messageView_sendEmo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="50dp"
+                                android:backgroundTint="#d499d4"
+                                android:text="SEND" />
+
+                        </LinearLayout>
+
+                    </TableLayout>
+
+
+                </FrameLayout>
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <EditText
         android:id="@+id/msgacti_et_msg"
@@ -71,104 +193,6 @@
         />
 
 
-    <FrameLayout
-        android:id="@+id/messageView_Framelayout"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:visibility="invisible"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:background="@color/white"
-        >
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            >
-
-            <TableRow
-                android:gravity="center"
-                >
-
-                <ImageView
-                    android:id="@+id/emo_img1"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    />
-                <ImageView
-                    android:id="@+id/emo_img2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    />
-                <ImageView
-                    android:id="@+id/emo_img3"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    />
-            </TableRow>
-            <TableRow
-                android:gravity="center"
-                >
-
-                <ImageView
-                    android:id="@+id/emo_img4"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    />
-                <ImageView
-                    android:id="@+id/emo_img5"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    />
-                <ImageView
-                    android:id="@+id/emo_img6"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="20dp"
-                    />
-            </TableRow>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                >
-
-                <TextView
-                    android:layout_marginLeft="50dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="태그"
-                    android:textSize="35sp"
-                    />
-                <TextView
-                    android:id="@+id/messageView_emotion"
-                    android:layout_marginLeft="50dp"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:textSize="35sp"
-                    />
-                <Button
-                    android:text="SEND"
-                    android:id="@+id/messageView_sendEmo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#d499d4"
-                    android:layout_marginLeft="50dp"/>
-            </LinearLayout>
-
-        </TableLayout>
-
-
-
-    </FrameLayout>
 
 
 </RelativeLayout>

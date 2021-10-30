@@ -1,5 +1,6 @@
 package com.konkuk17.messenger_example.ChatRoom
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
@@ -9,13 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.renderscript.ScriptGroup
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
@@ -49,6 +48,7 @@ class MessageActivity : AppCompatActivity() {
         init()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     fun init(){
         myUid = intent.getStringExtra("myUid")
         friendUid = intent.getStringExtra("friendUid")
@@ -66,6 +66,9 @@ class MessageActivity : AppCompatActivity() {
 
         checkChatRoom(msgRecyclerViewBind)
 
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         binding.msgactiBtnSubmit.setOnClickListener {
 
 
@@ -79,7 +82,9 @@ class MessageActivity : AppCompatActivity() {
                     FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").push().setValue(comment).addOnCompleteListener {task->
                         if(task.isSuccessful){
                             msgEditTextbind.setText("")
-
+                            binding.messageScrollview.post{
+                                binding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+                            }
                         }
                     }
 
@@ -89,9 +94,7 @@ class MessageActivity : AppCompatActivity() {
         }
 
         binding.messageTitleTxt.text = friendName
-        binding.messageActivityBack.setOnClickListener {
-            finish()
-        }
+
 
 
         var emoImgBind1 = binding.emoImg1
@@ -331,12 +334,8 @@ class MessageActivity : AppCompatActivity() {
         }
 
 
-        binding.messageRecyclerview.setOnClickListener {
-
-
-
-
-            if(binding.messageViewFramelayout.isActivated){
+        binding.messageActivityBack.setOnClickListener {
+            if(binding.messageViewFramelayout.visibility==View.VISIBLE){
                 emoImgBind1.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
                 emoImgBind2.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
                 emoImgBind3.setColorFilter(Color.parseColor("#ffffffff"), PorterDuff.Mode.MULTIPLY)
@@ -346,7 +345,11 @@ class MessageActivity : AppCompatActivity() {
                 isSelected = false
                 binding.messageViewFramelayout.visibility = View.GONE
             }
+            else{
+                finish()
+            }
         }
+
 
 
     }
@@ -385,6 +388,12 @@ class MessageActivity : AppCompatActivity() {
                             msgRecyclerViewBind.setHasFixedSize(true)
 
                             messageAdapter.notifyDataSetChanged()
+
+                            //binding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+
+                            binding.messageScrollview.post{
+                                binding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+                            }
                         }
 
                     }
@@ -415,6 +424,9 @@ class MessageActivity : AppCompatActivity() {
 
                         messageAdapter.notifyDataSetChanged()
 
+                        binding.messageScrollview.post{
+                            binding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+                        }
                     }
                 }
 
@@ -488,12 +500,21 @@ class MessageActivity : AppCompatActivity() {
                         comments.add(tmp)
 
                     }
+                    msgRecyclerViewBind.scrollToPosition(comments.size-1)
+
+                    msgViewBinding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+
                     //새로고침(메시지 갱신)
                     notifyDataSetChanged();
                     Log.d("fire","in adapter : for is end")
                     msgRecyclerViewBind.scrollToPosition(comments.size-1)
 
+                    msgViewBinding.messageScrollview.post{
+                        msgViewBinding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+                    }
+
                 }
+
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("fire","faild adapter")
@@ -518,6 +539,7 @@ class MessageActivity : AppCompatActivity() {
             fun bind(data:ChatModel.Comment, context:Context){
 
 
+
                 //내 아이디이면
                 if(data.uid.equals(myUid)){
                     //메세지일때
@@ -529,6 +551,8 @@ class MessageActivity : AppCompatActivity() {
                         message.visibility = View.VISIBLE
                         message.text = data.message
                         message.setBackgroundResource(R.drawable.left_bubble)
+
+
 
 
                         emoBtn.visibility = View.VISIBLE
@@ -550,14 +574,17 @@ class MessageActivity : AppCompatActivity() {
                                 ) {
                                     var emotion = response.body()
 
+
+
                                     val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
                                     imm.hideSoftInputFromWindow(msgViewBinding.msgactiEtMsg.windowToken,0)
-
 
 
                                     msgViewBinding.messageViewFramelayout.visibility = View.VISIBLE
                                     msgViewBinding.msgactiBtnSubmit.visibility = View.GONE
                                     msgViewBinding.msgactiEtMsg.visibility = View.GONE
+
+
 
                                     var emo_txt = msgViewBinding.messageViewFramelayout.findViewById<TextView>(R.id.messageView_emotion)
                                     var emo_img1 = msgViewBinding.messageViewFramelayout.findViewById<ImageView>(R.id.emo_img1)
@@ -634,6 +661,9 @@ class MessageActivity : AppCompatActivity() {
                                         emo_img6.setImageResource(R.drawable.emo_56)
                                     }
 
+                                    msgViewBinding.messageScrollview.post{
+                                        msgViewBinding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+                                    }
 
 
                                 }
@@ -744,7 +774,6 @@ class MessageActivity : AppCompatActivity() {
 
 
 
-
                         emptyView.visibility = View.GONE
                     }
 
@@ -769,58 +798,63 @@ class MessageActivity : AppCompatActivity() {
                         var num : Int = data.message.toString().toInt()
 
 
+
                         when(num/10){
                             0-> when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_01)
+                                2 -> emoImage.setImageResource(R.drawable.emo_02)
+                                3 -> emoImage.setImageResource(R.drawable.emo_03)
+                                4->emoImage.setImageResource(R.drawable.emo_04)
+                                5->emoImage.setImageResource(R.drawable.emo_05)
+                                6->emoImage.setImageResource(R.drawable.emo_06)
                             }
                             1->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.book)
-                                2 -> emoImage.setImageResource(R.drawable.book)
-                                3 -> emoImage.setImageResource(R.drawable.book)
-                                4->emoImage.setImageResource(R.drawable.book)
-                                5->emoImage.setImageResource(R.drawable.book)
-                                6->emoImage.setImageResource(R.drawable.book)
+                                1 -> emoImage.setImageResource(R.drawable.emo_11)
+                                2 -> emoImage.setImageResource(R.drawable.emo_12)
+                                3 -> emoImage.setImageResource(R.drawable.emo_13)
+                                4->emoImage.setImageResource(R.drawable.emo_14)
+                                5->emoImage.setImageResource(R.drawable.emo_15)
+                                6->emoImage.setImageResource(R.drawable.emo_16)
                             }
                             2->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_21)
+                                2 -> emoImage.setImageResource(R.drawable.emo_22)
+                                3 -> emoImage.setImageResource(R.drawable.emo_23)
+                                4->emoImage.setImageResource(R.drawable.emo_24)
+                                5->emoImage.setImageResource(R.drawable.emo_25)
+                                6->emoImage.setImageResource(R.drawable.emo_26)
                             }
                             3->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_31)
+                                2 -> emoImage.setImageResource(R.drawable.emo_32)
+                                3 -> emoImage.setImageResource(R.drawable.emo_33)
+                                4->emoImage.setImageResource(R.drawable.emo_34)
+                                5->emoImage.setImageResource(R.drawable.emo_35)
+                                6->emoImage.setImageResource(R.drawable.emo_36)
                             }
                             4->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_41)
+                                2 -> emoImage.setImageResource(R.drawable.emo_42)
+                                3 -> emoImage.setImageResource(R.drawable.emo_43)
+                                4->emoImage.setImageResource(R.drawable.emo_44)
+                                5->emoImage.setImageResource(R.drawable.emo_45)
+                                6->emoImage.setImageResource(R.drawable.emo_46)
                             }
                             5->when(num%10){
-                                1 -> emoImage.setImageResource(R.drawable.money)
-                                2 -> emoImage.setImageResource(R.drawable.money)
-                                3 -> emoImage.setImageResource(R.drawable.money)
-                                4->emoImage.setImageResource(R.drawable.money)
-                                5->emoImage.setImageResource(R.drawable.money)
-                                6->emoImage.setImageResource(R.drawable.money)
+                                1 -> emoImage.setImageResource(R.drawable.emo_51)
+                                2 -> emoImage.setImageResource(R.drawable.emo_52)
+                                3 -> emoImage.setImageResource(R.drawable.emo_53)
+                                4->emoImage.setImageResource(R.drawable.emo_54)
+                                5->emoImage.setImageResource(R.drawable.emo_55)
+                                6->emoImage.setImageResource(R.drawable.emo_56)
                             }
 
                         }
                     }
+                }
+
+                msgViewBinding.messageScrollview.post{
+                    msgViewBinding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
                 }
             }
 
@@ -841,6 +875,7 @@ class MessageActivity : AppCompatActivity() {
         override fun getItemCount(): Int {
             return comments.size
         }
+
     }
 }
 
