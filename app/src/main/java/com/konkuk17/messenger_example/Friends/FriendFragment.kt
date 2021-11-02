@@ -105,10 +105,10 @@ class FriendFragment : Fragment() {
         binding.apply{
 
             var user_id = myIdViewModel.myId.value.toString()
+            var user_name = myIdViewModel.myName.value.toString()
 
 
-
-            favoriteAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), favoritelist, friendService, user_id){ friendRecycleViewData ->
+            favoriteAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), favoritelist, friendService, user_id, user_name){ friendRecycleViewData ->
 
                 var favorite_add = friendRecycleViewData.id
 
@@ -155,7 +155,7 @@ class FriendFragment : Fragment() {
             favoriteListUpdate(friendService,favoriteAdapter,favoritelist)
 
             //recycler view에서 쓸 어뎁터
-            friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist, friendService, user_id){ friendRecycleViewData ->
+            friendAdapter = FriendRecycleViewAdapter(this@FriendFragment.requireContext(), friendlist, friendService, user_id, user_name){ friendRecycleViewData ->
 
                 var favorite_add = friendRecycleViewData.id
 
@@ -267,6 +267,7 @@ class FriendFragment : Fragment() {
                 myIdViewModel.setFriendList(friendlist)
                 val intent2 = Intent(this@FriendFragment.requireContext(), SearchFriendActivity::class.java)
                 intent2.putExtra("myUid",myIdViewModel.myId.value)
+                intent2.putExtra("myName",myIdViewModel.myName.value)
                 //intent2.putExtra("fList",myIdViewModel.friendList.value)
                 intent2.putExtra("fList", friendlist)
                 startActivityForResult(intent2,101)

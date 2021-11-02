@@ -68,7 +68,7 @@ class MyChatRecyclerViewAdapter(
         }
         else{
             for(chat in allChattingList){
-                if(chat.chat_other_id!!.contains(name)){
+                if(chat.chat_title!!.contains(name)){
                     values.add(chat)
                 }
             }

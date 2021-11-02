@@ -45,6 +45,7 @@ class SearchFriendActivity : AppCompatActivity() {
 
 
         var user_id = intent.getStringExtra("myUid").toString()
+        var user_name = intent.getStringExtra("myName").toString()
 
         //유저 친구 목록
         var friendList :ArrayList<FriendRecycleViewData> = intent.getSerializableExtra("fList") as ArrayList<FriendRecycleViewData>
@@ -52,7 +53,7 @@ class SearchFriendActivity : AppCompatActivity() {
         //검색하고 나서 저장할 목록(출력)
         //var searchList : ArrayList<FriendRecycleViewData>
 
-        var searchAdapter = FriendRecycleViewAdapter(this,friendList,friendService,user_id) { friendRecycleViewData ->
+        var searchAdapter = FriendRecycleViewAdapter(this,friendList,friendService,user_id, user_name) { friendRecycleViewData ->
 
             var favorite_add = friendRecycleViewData.id
 

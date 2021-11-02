@@ -28,6 +28,7 @@ class FriendRecycleViewAdapter(
     private var dataList: ArrayList<FriendRecycleViewData>,
     private val friendService: FriendService,
     private val user_id: String,
+    private val user_name: String,
     private val itemClick: (FriendRecycleViewData) -> Unit
     //private val deleteClick: (FriendRecycleViewData) -> Unit
 
@@ -111,6 +112,8 @@ class FriendRecycleViewAdapter(
                                 msgIntent.putExtra("friendUid", newChatting.chat_other_id)
                                 msgIntent.putExtra("friendName", newChatting.chat_title)
                                 msgIntent.putExtra("myUid", user_id)
+                                msgIntent.putExtra("myName", user_name)
+                                msgIntent.putExtra("from", "friend")
                                 context.startActivity(msgIntent)
 
                             }

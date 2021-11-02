@@ -3,6 +3,7 @@ package com.konkuk17.messenger_example.ChatRoom
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.database.collection.LLRBNode
+import com.konkuk17.messenger_example.Main.MainActivity
 import com.konkuk17.messenger_example.R
 import com.konkuk17.messenger_example.databinding.ActivityMessageBinding
 import retrofit2.Call
@@ -33,6 +35,7 @@ class MessageActivity : AppCompatActivity() {
 
     var friendUid : String? = ""
     var myUid : String? = ""
+    var myName : String? = ""
     var chatRoomUid : String =""
     var roomindex : String=""
     var friendName: String=""
@@ -54,6 +57,8 @@ class MessageActivity : AppCompatActivity() {
         friendUid = intent.getStringExtra("friendUid")
         roomindex = intent.getStringExtra("roomIndex").toString()
         friendName = intent.getStringExtra("friendName").toString()
+        myName = intent.getStringExtra("myName")
+
 
         //입력창 bind
         var msgEditTextbind = binding.msgactiEtMsg
@@ -348,6 +353,13 @@ class MessageActivity : AppCompatActivity() {
                 binding.messageViewFramelayout.visibility = View.GONE
             }
             else{
+                var from : String? = intent.getStringExtra("from")
+                if(from != null && from == "friend") {
+                    var mainIntent = Intent(this@MessageActivity, MainActivity::class.java)
+                    mainIntent.putExtra("myId", myUid)
+                    mainIntent.putExtra("myName", myName)
+                    startActivity(mainIntent)
+                }
                 finish()
             }
         }
@@ -363,6 +375,17 @@ class MessageActivity : AppCompatActivity() {
     }
 
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var from : String? = intent.getStringExtra("from")
+        if(from != null && from == "friend") {
+            var mainIntent = Intent(this@MessageActivity, MainActivity::class.java)
+            mainIntent.putExtra("myId", myUid)
+            mainIntent.putExtra("myName", myName)
+            startActivity(mainIntent)
+        }
+        finish()
+    }
 
     fun checkChatRoom(msgRecyclerViewBind: RecyclerView){
 
