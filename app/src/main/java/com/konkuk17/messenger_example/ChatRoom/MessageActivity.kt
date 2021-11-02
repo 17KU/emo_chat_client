@@ -67,7 +67,7 @@ class MessageActivity : AppCompatActivity() {
         checkChatRoom(msgRecyclerViewBind)
 
 
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+       // window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         binding.msgactiBtnSubmit.setOnClickListener {
 
