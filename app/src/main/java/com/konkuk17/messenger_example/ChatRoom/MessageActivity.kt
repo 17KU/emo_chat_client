@@ -85,6 +85,8 @@ class MessageActivity : AppCompatActivity() {
                             binding.messageScrollview.post{
                                 binding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
                             }
+                            binding.msgactiEtMsg.isFocusable = true
+
                         }
                     }
 
@@ -350,6 +352,12 @@ class MessageActivity : AppCompatActivity() {
             }
         }
 
+        binding.msgactiEtMsg.setOnClickListener{
+            binding.messageScrollview.post{
+                binding.messageScrollview.fullScroll(ScrollView.FOCUS_DOWN)
+            }
+            binding.msgactiEtMsg.requestFocus()
+        }
 
 
     }
@@ -771,7 +779,6 @@ class MessageActivity : AppCompatActivity() {
                         msgViewBinding.messageViewFramelayout.visibility = View.GONE
                         msgViewBinding.msgactiBtnSubmit.visibility = View.VISIBLE
                         msgViewBinding.msgactiEtMsg.visibility = View.VISIBLE
-
 
 
                         emptyView.visibility = View.GONE

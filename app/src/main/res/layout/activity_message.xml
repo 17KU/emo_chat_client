@@ -46,33 +46,37 @@
         >
 
         <LinearLayout
-            android:gravity="bottom"
+
+            android:ignoreGravity="@+id/message_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/message_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-
-
-                />
-
             <RelativeLayout
-                    android:id="@+id/messageView_Framelayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/message_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
 
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+
+
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/messageView_Framelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/message_recyclerview"
 
                     android:background="@color/white"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TableLayout
                         android:layout_width="match_parent"
@@ -160,13 +164,18 @@
                 </RelativeLayout>
 
 
+            </RelativeLayout>
+
+
+
+
         </LinearLayout>
 
     </ScrollView>
 
 
-
     <EditText
+
         android:id="@+id/msgacti_et_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
