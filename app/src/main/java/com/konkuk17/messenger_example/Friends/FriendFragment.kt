@@ -95,7 +95,7 @@ class FriendFragment : Fragment() {
 
         //retrofit 연결
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://203.252.166.72:80")
+            .baseUrl("http://203.252.166.201:80")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

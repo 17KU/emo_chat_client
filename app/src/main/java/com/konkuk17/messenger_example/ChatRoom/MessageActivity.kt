@@ -504,7 +504,7 @@ class MessageActivity : AppCompatActivity() {
 
             retrofit = Retrofit.Builder()
 
-            emoService = retrofit.baseUrl("http://203.252.166.72:80")
+            emoService = retrofit.baseUrl("http://203.252.166.201:80")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build().create(EmoService::class.java)
 
