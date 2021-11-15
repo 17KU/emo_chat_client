@@ -65,7 +65,7 @@ class SettingFragment : Fragment() {
     fun init() {
         //레트로핏 객체 만들기
         retrofit = Retrofit.Builder()
-            .baseUrl("http://203.252.166.201:80")
+            .baseUrl("http://192.168.17.107:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
