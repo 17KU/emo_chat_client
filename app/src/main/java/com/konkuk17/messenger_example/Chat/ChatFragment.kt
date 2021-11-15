@@ -63,7 +63,7 @@ class ChatFragment : Fragment() {
 
         //레트로핏 객체 만들기
         retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.17.107:8000")
+            .baseUrl("http://192.168.219.106:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

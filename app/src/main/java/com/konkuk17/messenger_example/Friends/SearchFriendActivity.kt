@@ -36,7 +36,7 @@ class SearchFriendActivity : AppCompatActivity() {
 
         //retrofit 연결
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.17.107:8000")
+            .baseUrl("http://192.168.219.106:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
