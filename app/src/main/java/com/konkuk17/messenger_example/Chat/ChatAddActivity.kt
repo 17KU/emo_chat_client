@@ -93,7 +93,7 @@ class ChatAddActivity : AppCompatActivity() {
     fun insertChatting(myUserId: String, myFriendId: String) {
         //retrofit 객체 만들기
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.219.106:8000")
+            .baseUrl("http://220.87.45.195:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

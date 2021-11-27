@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
     fun init() {
         //retrofit 객체 만들기
         retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.219.106:8000")
+            .baseUrl("http://220.87.45.195:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
